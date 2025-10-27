@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>公司環境與員工福利 - North co. 諾思資訊（重設計版）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="north co. 諾思資訊 — 公司環境與員工福利介紹（重設計版）">
+  
+  
+  
+  
+  <style>
+    :root{
+      --brand-a: #70b0c4; /* 主色：青藍 (Original: #82bdcc) */
+      --brand-b: #f6f7f9; /* 輔色：霧白 */
+      --brand-c: #5a9aaa; /* 深一階點綴 (Original: #6ba3b3) */
+      --ink-1:#111827;  /* 字色深 */
+      --ink-2:#374151;  /* 字色中 */
+      --ink-3:#6b7280;  /* 字色淺 */
+      --card-bg: #ffffff; /* (Original: linear-gradient(135deg,#ffffff 0%,#f7fafc 100%)) */
+      --glass:rgba(255,255,255,.55);
+      --shadow-lg:0 20px 60px rgba(0,0,0,.15);
+      --shadow-md:0 10px 30px rgba(0,0,0,.12);
+      --shadow-sm:0 6px 16px rgba(0,0,0,.08);
+      --radius-2xl:22px;
+      --radius-xl:16px;
+      --radius-lg:14px;
+      --speed:220ms;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Orbitron','Microsoft JhengHei','PingFang TC','Helvetica Neue',Arial,sans-serif;
+      color:var(--ink-1);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(130,189,204,.22), transparent 60%),
+        radial-gradient(900px 500px at -10% 30%, rgba(130,189,204,.18), transparent 60%),
+        #f6f7f9;
+      line-height:1.65;
+      overflow-x:hidden;
+    }
+
+/* ====== NAVBAR ====== */
+    .navbar{position:fixed;top:0;width:100%;background:rgba(246,247,249,.95);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;transition:all .3s ease}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}
+    .brand{display:flex;align-items:center;gap:.7rem}
+    .brand img{width:64px;border-radius: 12px; height:64px}
+    .brand .txt{font-family:"Argon","Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;letter-spacing:.10em;font-size:1.85rem;font-weight:700;color:var(--brand-a);line-height:1}
+    .btn-back{
+      appearance:none;border:0;cursor:pointer;text-decoration:none;color:#fff;
+      padding:10px 18px;border-radius:999px; font-weight:700; letter-spacing:.3px;
+      background:linear-gradient(135deg,var(--brand-a),var(--brand-c));
+      box-shadow:0 8px 24px rgba(130,189,204,.35);
+      transition:transform var(--speed), box-shadow var(--speed);
+    }
+    .btn-back:hover{transform:translateY(-1px); box-shadow:0 10px 30px rgba(130,189,204,.45)}
+
+    /* ====== HERO ====== */
+    .hero{margin-top:80px;min-height:58vh;display:grid;place-items:center;padding:64px 24px;position:relative;overflow:hidden}
+    .hero::before{
+      content:"";position:absolute;inset:-40% -10% auto -10%;height:70%;
+      background:radial-gradient(60% 60% at 50% 50%, rgba(130,189,204,.28), transparent 70%);
+      filter:blur(30px);opacity:.85;pointer-events:none
+    }
+    .hero-inner{max-width:1100px;margin:0 auto;text-align:center}
+    .hero h1{font-size:clamp(32px,4.5vw,56px);font-weight:900;letter-spacing:.5px;color:var(--ink-1);margin-bottom:14px}
+    .hero .subtitle{font-size:clamp(16px,2.2vw,22px);font-weight:700;color:var(--brand-a);margin-bottom:18px}
+    .hero p{font-size:clamp(14px,1.7vw,18px);color:var(--ink-3);max-width:860px;margin:0 auto}
+
+    /* ====== GRID WRAPPER ====== */
+    .wrap{max-width:1200px;margin:0 auto;padding:24px}
+    .section-title{display:flex;align-items:center;gap:10px;margin:8px 0 18px;color:var(--ink-2)}
+
+    .grid{
+      display:grid;gap:24px;align-items:stretch;
+      grid-template-columns:repeat(12,1fr);
+    }
+    /* 三欄主卡 + 交錯寬度 */
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+    .col-7{grid-column:span 7}
+    .col-5{grid-column:span 5}
+
+    @media (max-width:960px){.col-7,.col-5,.col-6{grid-column:span 12}}
+
+    /* ====== CARD (影片 + 文字覆蓋) ====== */
+    .card{
+      position:relative;overflow:hidden;border-radius:var(--radius-2xl);
+      background:var(--card-bg); box-shadow:var(--shadow-md);
+      border:1px solid rgba(130,189,204,.40); /* (Original alpha: .25) */
+      transition:transform var(--speed), box-shadow var(--speed);
+      isolation:isolate;
+      
+      /* === 修正 1：設為 Flex 讓內部 .info 可以伸展 === */
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
+
+    .media{position:relative; height:420px}
+    .media video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+
+    /* 文字覆蓋層 */
+    .overlay{
+      position:absolute; inset:auto 16px 16px 16px; padding:18px 18px 16px; z-index:1;
+      border-radius:18px; color:#0f172a; background:var(--glass);
+      backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.45);
+      box-shadow:var(--shadow-sm);
+      transform:translateY(8px); opacity:.0; transition:opacity var(--speed), transform var(--speed);
+    }
+    .card:hover .overlay{opacity:1; transform:translateY(0)}
+    .overlay h3{font-size:22px; font-weight:800; margin-bottom:6px}
+    .overlay p{font-size:14px; color:#1f2937}
+    .tags{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px}
+    .tag{font-size:12px; font-weight:700; padding:6px 10px; border-radius:999px; color:#fff;
+      background:linear-gradient(135deg,var(--brand-a),var(--brand-c)); box-shadow:0 6px 16px rgba(130,189,204,.35)}
+
+    /* 側邊資訊欄（可替代原先左右交錯的圖文） */
+    .info{
+      padding:24px 24px 26px; display:flex; flex-direction:column; gap:12px;
+      background:linear-gradient(180deg,#ffffff 0%, #f0f7fa 100%);
+      border-top:1px solid rgba(130,189,204,.40); /* (Original alpha: .25) */
+      
+      /* === 修正 1：讓此區塊自動伸展填滿 === */
+      flex-grow: 1;
+    }
+    .info h3{font-size:24px; font-weight:800}
+    .info p{font-size:15px; color:var(--ink-2)}
+    .info .mini-tags{display:flex; flex-wrap:wrap; gap:8px}
+    .info .mini{font-size:12px; font-weight:700; padding:6px 10px; border-radius:999px; color:#fff; background:linear-gradient(135deg,var(--brand-a),var(--brand-c))}
+
+    /* ====== CTA / 回到頂部 ====== */
+    .cta-bar{position:sticky; bottom:18px; display:flex; justify-content:flex-end; margin-top:24px}
+    .btn-cta{
+      appearance:none; border:0; cursor:pointer; text-decoration:none; color:#0f172a; font-weight:800;
+      background:#fff; padding:12px 18px; border-radius:999px; display:inline-flex; align-items:center; gap:10px;
+      border:1px solid rgba(130,189,204,.35);
+      box-shadow:0 10px 28px rgba(130,189,204,.28);
+      transition:transform var(--speed), box-shadow var(--speed), background var(--speed);
+    }
+    .btn-cta:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(130,189,204,.38); background:linear-gradient(180deg,#ffffff 0%,#f3fbff 100%)}
+
+    .back-to-top{position:fixed; right:22px; bottom:22px; width:52px; height:52px; border-radius:50%; border:0; cursor:pointer;
+      background:linear-gradient(135deg,var(--brand-a),var(--brand-c)); color:#fff; display:grid; place-items:center;
+      box-shadow:0 10px 30px rgba(130,189,204,.4); opacity:0; visibility:hidden; transition:opacity var(--speed), transform var(--speed), visibility var(--speed)}
+    .back-to-top.show{opacity:1; visibility:visible}
+
+    /* ====== LIGHTBOX ====== */
+    .lightbox{position:fixed; inset:0; background:rgba(15,23,42,.86); z-index:60; display:none; align-items:center; justify-content:center}
+    .lightbox.open{display:flex}
+    .lightbox-inner{width:min(1080px,92vw); border-radius:var(--radius-xl); overflow:hidden; background:#0b1220; box-shadow:var(--shadow-lg); position:relative}
+    .lightbox video{width:100%; height:62vh; object-fit:cover; background:#000}
+    .lightbox .content{padding:18px 18px 22px; color:#e5e7eb}
+    .lightbox .content h3{font-weight:900; font-size:22px; margin-bottom:8px}
+    .lightbox .content p{color:#cbd5e1; font-size:14px}
+    .ctrl{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:48px; height:48px; border-radius:50%; display:grid; place-items:center; cursor:pointer; user-select:none;
+      background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.2)
+    }
+    .ctrl:hover{background:rgba(255,255,255,.2)}
+    .ctrl.prev{left:12px}
+    .ctrl.next{right:12px}
+    .ctrl.close{top:12px; right:12px; transform:none}
+
+    /* ====== UTIL ====== */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+<style>
+/* === Injected: disable video click/lightbox & selection === */
+.media a, .video-card a, .env-card a { pointer-events: none !important; }
+video { user-select: none; -webkit-user-drag: none; }
+
+/* === Normalize to match north.html === */
+
+/* 引入 Argon（路徑沿用 north 的檔案結構） */
+@font-face{
+  font-family:"Argon";
+  src: url("./fonts/Argon.woff2") format("woff2"),
+       url("./fonts/ArgonR.otf") format("opentype"),
+       url("./fonts/Argon.woff") format("woff");
+  font-display:swap;
+}
+
+/* 全站字型堆疊改為 north 的設定 */
+body{
+  font-family:"Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif !important;
+  line-height:1.6; color:#333; background:#f6f7f9;
+}
+
+.logo-text,
+.hero-content h1{
+  font-family:"Argon","Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;letter-spacing: .10em; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="brand">
+        <img src="./icon/northlogo.png" alt="North co. Logo" />
+        <span class="txt">north co.</span>
+      </div>
+      <a class="btn-back" href="north.html">回到主頁</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>公司環境與員工福利</h1>
+      <div class="subtitle">每天專注打拼的同時，也需要片刻放鬆與自在。</div>
+      <p>這裡不只是辦公室，而是一個能讓你補足能量、安心前行的所在。我們相信，用心打造的每個角落和細節，都能讓努力更有意義。</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <div class="grid" id="env-grid">
+      <article class="card col-5" data-title="🍽️ 員工餐廳" data-desc="「今天要吃什麼」不再是煩惱，因為公司有專業的廚師團隊為你準備早餐和午餐！自助式的豐盛選擇，健康營養又好吃，讓你元氣滿滿迎接挑戰。" data-tags="專業廚師團隊,早餐午餐供應,自助式選擇,健康營養" data-src="./video/c1424.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/c1424.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>🍽️ 員工餐廳</h3>
+          <p>「今天要吃什麼」不再是煩惱！<br>因為公司有專業的廚師團隊為你準備早餐和午餐！<br>自助式的豐盛選擇，健康營養又好吃，讓你元氣滿滿迎接挑戰。</p>
+        </div>
+      </article>
+
+      <article class="card col-7" data-title="☕ 咖啡吧檯" data-desc="每天的靈感與好心情，都從一杯咖啡開始。不管你想要濃郁的醒腦特調，還是溫柔的奶香陪伴，咖啡師客製化的功力不容小覷。" data-tags="專業咖啡師,客製化調製,多樣選擇,現場沖煮" data-src="./video/0923.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/0923.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>☕ 咖啡吧檯</h3>
+          <p>每天的靈感與好心情，都從一杯咖啡開始。<br>不管你想要濃郁的醒腦特調，還是溫柔的奶香陪伴，咖啡師客製化的功力不容小覷。</p>
+        </div>
+      </article>
+
+      <article class="card col-7" data-title="💪 健身房" data-desc="壓力？在啞鈴前不值一提！公司專屬健身房，從有氧到重量訓練，讓你在忙碌之餘身體也能保持最佳狀態。" data-tags="專屬健身房,有氧設備,重量訓練,完整器材" data-src="./video/gym.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/gym_cut.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>💪 健身房</h3>
+          <p>壓力？在啞鈴前不值一提！<br>公司專屬健身房，從有氧到重量訓練，讓你在忙碌之餘身體也能保持最佳狀態。</p>
+        </div>
+      </article>
+
+      <article class="card col-5" data-title="🧘‍♀️ 按摩椅室" data-desc="累了就來放空吧！一張按摩椅，隨時幫你舒緩緊繃，精神滿血回歸。" data-tags="專業按摩椅,舒緩緊繃,放鬆環境,隨時使用" data-src="./video/P1015243.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/ms.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>🧘‍♀️ 按摩椅室</h3>
+          <p>累了就來放空吧！<br>一張按摩椅，隨時幫你舒緩緊繃，精神滿血回歸。</p>
+        </div>
+      </article>
+
+      <article class="card col-5" data-title="🍿 補給區" data-desc="零食控的天堂：餅乾、飲料、糖果、巧克力樣樣齊全！而且不定期上架話題商品，全新品項等你來嘗鮮。" data-tags="多樣零食,飲料供應,話題商品,定期更新" data-src="./snacks-video.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/snacks-video3.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>🍿 補給區</h3>
+          <p>零食控的天堂：餅乾、飲料、糖果、巧克力樣樣齊全！<br>而且不定期上架話題商品，全新品項等你來嘗鮮。</p>
+        </div>
+      </article>
+
+      <article class="card col-7" data-title="🪜 階梯活動空間" data-desc="多功能小宇宙，閱讀角落、電玩互動、講座、派對都能在這裡展開。這裡是激發創意、碰撞靈感的快樂秘密基地。" data-tags="多功能空間,閱讀角落,電玩互動,創意交流" data-src="./stairs-video.mp4">
+        <div class="media"><video autoplay muted loop playsinline src="./video/book.mp4" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video></div>
+
+        <div class="info">
+          <h3>🪜 階梯活動空間</h3>
+          <p>多功能小宇宙，閱讀角落、電玩互動、講座、派對都能在這裡展開。<br>這裡是激發創意、碰撞靈感的快樂秘密基地。</p>
+        </div>
+      </article>
+
+    </div>
+
+
+  </main>
+
+  <button class="back-to-top" id="backToTop" aria-label="回到頂端">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 14l5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="sr-only">回到頂端</span>
+  </button>
+
+  <section class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="ctrl close" id="lbClose" aria-label="關閉">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M6 18L18 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ctrl prev" id="lbPrev" aria-label="上一個">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="ctrl next" id="lbNext" aria-label="下一個">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <video id="lbVideo" playsinline autoplay muted loop preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video>
+      <div class="content">
+        <h3 id="lbTitle"></h3>
+        <p id="lbDesc"></p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  
+  
+  
+  
+    // ====== 滾動：顯示回頂 ======
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll',()=>{
+      if(window.scrollY>140){ backToTop.classList.add('show'); }
+      else{ backToTop.classList.remove('show'); }
+    });
+    backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // ====== 卡片：滑鼠移動上去會停止影片，移開恢復播放 ======
+    document.querySelectorAll('.card .media video').forEach(v=>{
+      const onEnter=()=>{ v.pause(); };
+      const onLeave=()=>{ v.play().catch(()=>{}); };
+      v.closest('.card').addEventListener('mouseenter',onEnter);
+      v.closest('.card').addEventListener('mouseleave',onLeave);
+    });
+
+    // ====== Lightbox (點圖片/卡片放大，可左右看) ======
+    const cards=[...document.querySelectorAll('.card')];
+    const lightbox=document.getElementById('lightbox');
+    const lbVideo=document.getElementById('lbVideo');
+    const lbTitle=document.getElementById('lbTitle');
+    const lbDesc=document.getElementById('lbDesc');
+    const lbPrev=document.getElementById('lbPrev');
+    const lbNext=document.getElementById('lbNext');
+    const lbClose=document.getElementById('lbClose');
+    let idx=0;
+
+    function openLB(i){
+      idx=(i+cards.length)%cards.length;
+      const el=cards[idx];
+      lbVideo.src=el.dataset.src;
+      lbTitle.textContent=el.dataset.title;
+      lbDesc.textContent=el.dataset.desc;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      lbVideo.currentTime=0; lbVideo.play().catch(()=>{});
+    }
+    function closeLB(){
+      lbVideo.pause(); lbVideo.src='';
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+    }
+    function nextLB(){ openLB(idx+1); }
+    function prevLB(){ openLB(idx-1); }
+
+    cards.forEach((c,i)=>{
+      c.addEventListener('click',e=>{
+        // 避免點擊 CTA、連結等誤觸（本卡內目前無，但預留）
+        if(e.target.closest('a,button')) return;
+        openLB(i);
+      });
+    });
+    lbNext.addEventListener('click',nextLB);
+    lbPrev.addEventListener('click',prevLB);
+    lbClose.addEventListener('click',closeLB);
+    lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLB(); });
+    window.addEventListener('keydown',e=>{
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key==='Escape') closeLB();
+      if(e.key==='ArrowRight') nextLB();
+      if(e.key==='ArrowLeft') prevLB();
+    });
+  </script>
+
+<script>
+// === Injected: Seamless autoplay/loop & disable download/lightbox (0.03s rebound) ===
+(function(){
+  // Stop lightbox behavior by preventing default on any click within media containers
+  document.addEventListener('click', function(e){
+    const el = e.target.closest('.media, .video, .video-card, .env-card');
+    if (el) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+
+  // Hover pause / resume (if cards exist)
+  document.querySelectorAll('video').forEach(function(v){
+    const card = v.closest('.card, .env-card, .video-card, .media') || v;
+    card.addEventListener('mouseenter', function(){ v.pause(); }, {passive:true});
+    card.addEventListener('mouseleave', function(){ v.play().catch(function(){}); }, {passive:true});
+  });
+
+  function makeSeamless(video){
+    try{
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = 'auto';
+      video.removeAttribute('controls');
+      video.setAttribute('controlsList','nodownload noplaybackrate nofullscreen');
+      video.setAttribute('disablePictureInPicture','');
+      video.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+      var EPS = 0.03;
+      video.addEventListener('timeupdate', function(){
+        if (video.duration && (video.duration - video.currentTime) < EPS){
+          video.currentTime = 0.01;
+        }
+      });
+      video.addEventListener('ended', function(){
+        video.currentTime = 0.01;
+        video.play().catch(function(){});
+      });
+
+      var tryPlay = function(){ video.play().catch(function(){}); };
+      video.addEventListener('canplay', tryPlay);
+      video.addEventListener('loadeddata', tryPlay);
+      // in case the tag is already ready:
+      tryPlay();
+    }catch(e){}
+  }
+  document.querySelectorAll('video').forEach(makeSeamless);
+})();
+</script>
+
+</body>
+</html>

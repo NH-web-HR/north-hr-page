@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North co. 諾思資訊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/flow.css" />
+  <meta name="description" content="North co. 諾思資訊 — 結合軟體開發與硬體整合、服務橫跨數位娛樂、系統整合、應用軟體與設備規劃的專業團隊。以深厚的技術力與國際合作經驗為基礎，我們持續打造具創新思維的產品與解決方案，協助客戶迎接數位轉型的挑戰。">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:"Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;
+      line-height:1.6;color:#333;background:#f6f7f9;overflow-x:hidden
+    }
+    @font-face{
+      font-family:"Argon";
+      src: url("./fonts/Argon.woff2") format("woff2"),
+	  	   url("./fonts/ArgonR.otf") format("opentype"),
+           url("./fonts/Argon.woff") format("woff");
+      font-display:swap;
+    }
+    .logo-text,
+    .hero-content h1{
+      font-family:"Argon","Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;letter-spacing: .10em; 
+    }
+
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes shimmer{0%{left:-75%}100%{left:125%}}
+
+    /* navbar */
+    .navbar{position:fixed;top:0;width:100%;background:rgba(246,247,249,.95);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;transition:all .3s ease}
+    .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}
+    .logo{display:flex;align-items:center;gap:.7rem}
+    .logo img{width:64px;border-radius: 12px; height:64px}
+    .logo-text{font-size:1.85rem;font-weight:700;color:#82bdcc;line-height:1}
+    .nav-links{display:flex;list-style:none;gap:2rem}
+    .nav-links a{text-decoration:none;color:#333;font-weight:500;transition:color .3s ease}
+    .nav-links a:hover{color:#82bdcc}
+    .cta-button{background:linear-gradient(135deg,#82bdcc,#6ba3b3);color:#fff;padding:.75rem 1.5rem;border:none;border-radius:25px;text-decoration:none;font-weight:600;transition:all .3s ease;box-shadow:0 4px 15px rgba(130,189,204,.3);position:relative;overflow:hidden}
+    .cta-button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(130,189,204,.4)}
+    .cta-button::before{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:rgba(255,255,255,.3);transform:skewX(-20deg);transition:all .7s ease}
+    .cta-button:hover::before{animation:shimmer .7s ease}
+
+    /* News */
+    .news-section{padding:5rem 0;background:#fff}
+    .news-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+    .news-title{text-align:center;font-size:2.5rem;font-weight:700;color:#333;margin-bottom:3rem}
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;margin-bottom:3rem}
+    .news-item{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.1);transition:all .3s ease;cursor:pointer}
+    .news-item:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.15)}
+    .news-thumbnail{width:100%;height:200px;background-size:cover;background-position:center;position:relative}
+    .news-date{position:absolute;top:1rem;right:1rem;background:rgba(130,189,204,.9);color:#fff;padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:500}
+    .news-content{padding:1.5rem}
+    .news-category{color:#82bdcc;font-size:.9rem;font-weight:600;margin-bottom:.5rem}
+    .news-item h3{font-size:1.3rem;font-weight:700;color:#333;margin-bottom:1rem;line-height:1.4}
+    .news-excerpt{color:#666;line-height:1.6;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .read-more{color:#82bdcc;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .3s ease}
+    .read-more:hover{color:#6ba3b3}
+    .news-empty{color:#888;text-align:center}
+
+    /* hero 調為 60% 高度 */
+    .hero{min-height:60vh;display:flex;align-items:center;padding:0 2rem;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);position:relative;overflow:hidden}
+    .hero-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .hero-content h1{font-size:3.5rem;font-weight:800;color:#333;margin-bottom:1rem;line-height:1.2}
+    .hero-content .subtitle{font-size:1.5rem;color:#82bdcc;margin-bottom:2rem;font-weight:600}
+    .hero-content p{font-size:1.1rem;color:#666;margin-bottom:2rem;line-height:1.8}
+    .hero-circle{width:300px;height:300px;border-radius:50%;background:linear-gradient(135deg,#82bdcc,#6ba3b3);display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 20px 40px rgba(130,189,204,.3);position:relative;overflow:hidden}
+    .hero-circle-content{text-align:center;color:#fff;font-size:1.2rem;font-weight:600;padding:2rem;opacity:0;transition:opacity .5s ease-in-out}
+    .hero-circle-content.active{opacity:1}
+
+    .animate-on-scroll{opacity:0;transform:translateY(30px);transition:all .8s ease}
+    .animate-on-scroll.fade-up{animation:fadeInUp .8s ease forwards}
+    .animate-on-scroll.fade-left{animation:fadeInLeft .8s ease forwards}
+    .animate-on-scroll.fade-right{animation:fadeInRight .8s ease forwards}
+    .animate-on-scroll.fade-in{animation:fadeIn .8s ease forwards}
+
+    /* services（加大間距＋文字可讀性提升＋首次上下交錯入場） */
+    .services{padding:5rem 0;background:#fff}
+    .services-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .services-content .kickers{color:#82bdcc;font-weight:700;letter-spacing:.2em;font-size:.9rem;margin-bottom:1rem}
+    .services-content h2{font-size:2.5rem;font-weight:800;color:#333;margin-bottom:1rem;line-height:1.2}
+    .services-content p{color:#666;margin-bottom:2rem;line-height:1.8}
+    .services-tags{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:2rem}
+    .service-tag{background:linear-gradient(135deg,#82bdcc,#6ba3b3);color:#fff;padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+
+    .flow__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem}
+	.flow {
+  padding: 5rem 0;
+  background: linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);
+}
+    .flow-card{
+	opacity:0;
+	transform:translateY(var(--offset,40px));
+	transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s;
+	
+	}
+	.flow-card {
+  border: 1px solid transparent;     /* 邊框透明，避免黑線 */
+  border-radius: 18px;               /* 圓角，柔化邊緣 */
+  overflow: hidden;                  /* 讓圖片跟著卡片圓角裁切 */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* 柔和陰影，取代黑邊 */
+  background: rgba(255,255,255,0.02);      /* 極淡背景，避免邊緣空白 */
+}
+.flow-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* 確保圖片填滿 */
+}
+
+	
+    .flow-card.in{opacity:1;transform:translateY(0)}
+    .flow-card:nth-child(odd){--offset:48px}
+    .flow-card:nth-child(even){--offset:-48px}
+
+    .flow-card__overlay{
+      position:absolute;inset:0;display:flex;align-items:flex-end;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+      padding:1.1rem;
+    }
+    .flow-card__text h3{
+      color:#fff;font-weight:800;letter-spacing:.02em;
+      font-size:1.25rem;line-height:1.25;text-shadow:0 4px 18px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.8);
+      margin-bottom:.35rem;
+    }
+    .flow-card__text p{
+      color:#eaf3f6;font-size:1.02rem;line-height:1.6;
+      text-shadow:0 3px 14px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.75);
+    }
+
+    /* company photos - 無縫跑馬燈（JS 控制，無 CSS animation） */
+    .company-photos{padding:5rem 0;background:#fff;overflow:hidden}
+    .photos-container{max-width:1200px;margin:0 auto;text-align:center;padding:0 2rem}
+    .photos-container h2{font-size:2.5rem;font-weight:700;color:#333;margin-bottom:1.5rem}
+    .photos-sub{color:#82bdcc;margin-bottom:2rem}
+    .photo-slider{display:flex;gap:2rem;margin-bottom:2rem;will-change:transform}
+    .photo-item{position:relative;flex-shrink:0;width:300px;height:200px;border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.1);cursor:pointer}
+    .photo-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+    .photo-item:hover img{transform:scale(1.05)}
+    .photo-caption{position:absolute;left:0;right:0;bottom:0;padding:.8rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.95rem;opacity:0;transform:translateY(10px);transition:all .25s ease}
+    .photo-item:hover .photo-caption{opacity:1;transform:translateY(0)}
+
+    .see-more-wrap{margin-top:1rem;text-align:center;   /* 讓子元素文字置中 */}
+
+    /* lightbox */
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
+    .lightbox.active{display:flex}
+    .lightbox-inner{max-width:min(95vw,1200px);max-height:90vh;position:relative}
+    .lightbox-img{max-width:100%;max-height:80vh;border-radius:12px;display:block;margin:0 auto}
+    .lightbox-caption{color:#fff;text-align:center;margin-top:1rem;line-height:1.6}
+    .lb-close,.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:none;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .lb-close{top:24px;right:24px;transform:none}
+    .lb-prev{left:-64px}
+    .lb-next{right:-64px}
+    .lb-prev:hover,.lb-next:hover,.lb-close:hover{background:rgba(255,255,255,.3)}
+    @media(max-width:768px){.lb-prev{left:8px}.lb-next{right:8px}}
+
+    .philosophy{padding:5rem 0;background:#fff}
+    .philosophy-container{max-width:1200px;margin:0 auto;padding:0 2rem;text-align:center}
+    .philosophy h2{font-size:2.5rem;font-weight:700;color:#333;margin-bottom:3rem}
+    .philosophy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:3rem}
+    .philosophy-item{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);padding:2rem;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.05);transition:transform .3s ease}
+    .philosophy-item:hover{transform:translateY(-5px)}
+    .philosophy-item h3{font-size:1.3rem;font-weight:600;color:#82bdcc;margin-bottom:1rem}
+    .philosophy-item p{color:#666;line-height:1.6}
+
+    #recruit{padding:5rem 0;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%)}
+    .recruit-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+    .recruit-title{font-size:2.2rem;font-weight:800;margin-bottom:1rem;color:#333;text-align:center}
+    .recruit-sub{color:#666;text-align:center;margin-bottom:1.5rem}
+    .recruit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
+    .recruit-pill{background:#fff;border:1px solid #e6eef2;border-radius:999px;padding:.75rem 1rem;text-align:center}
+    .recruit-cta{text-align:center;margin-top:1.5rem}
+
+    #contact{padding:5rem 0;background:#fff}
+    .contact-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.2fr 1fr;gap:2rem}
+    .contact-card{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);padding:1.5rem 1.25rem;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    .contact-card h3{color:#333;margin-bottom:.75rem}
+    .contact-card p{color:#555;margin:.25rem 0}
+    .map-embed iframe{width:100%;height:100%;min-height:320px;border:0;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+
+    .footer{background:#333;color:#fff;padding:3rem 0;text-align:center}
+    .footer-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+
+    @media(max-width:1200px){.flow__grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){
+      .hero-container{grid-template-columns:1fr;text-align:center}
+      .hero-content h1{font-size:2.5rem}
+      .hero-circle{width:250px;height:250px}
+      .services-container{grid-template-columns:1fr;gap:2rem}
+      .nav-links{display:none}
+      .flow__grid{grid-template-columns:1fr;gap:2rem}
+    }
+	
+	
+		/* 卡片外框 */
+	.recruit-pill{
+	  display:flex;
+	  flex-direction:column;
+	  align-items:center;
+	  text-align:center;
+
+	  padding:18px 20px;
+	  background:#fff;
+	  border:1px solid #e6e9ef;        /* 細邊 */
+	  border-radius:25px;               /* 圓角 */
+	  overflow: hidden;      /* 圖或背景不會超出圓角 */
+	  
+	  box-shadow:0 4px 16px rgba(0,0,0,.06); /* 淡陰影 */
+	  color:#374151;                    /* 內文字色 */
+	  line-height:1.85;                 /* 行高像圖1一樣鬆 */
+	  
+	}
+
+	/* 上方圖示 */
+	.recruit-pill > img{
+	  width:64px;                       /* 圖大小 */
+	  height:64px;
+	  margin-bottom: -6px;   
+	  object-fit:contain;
+	  display:block;
+	}
+
+	/* 標題（第一行字） */
+	.recruit-pill .rp-title{
+	  font-weight:900;
+
+	  font-size:18px;
+	  color:#111827;
+	  margin: 2px 0 6px;  
+	}
+
+	/* 內文（條列） */
+	.recruit-pill .rp-list{
+	  font-size:14px;
+	  color:#4b5563;
+	  margin-top: 0;                /* 靠上 */
+	  line-height: 1.7;  
+	}
+
+	
+	
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="./icon/northlogo.png" alt="north co. Logo" />
+        <span class="logo-text">north co.</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">首頁</a></li>
+        <li><a href="#services">解決方案</a></li>
+        <li><a href="#company-photos">公司環境</a></li>
+        <li><a href="#recruit">人才招募</a></li>
+        <li><a href="#contact">聯絡方式</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-content animate-on-scroll fade-left">
+        <h1>north co.</h1>
+        <div class="subtitle">諾思資訊</div>
+        <p>成立於2022年。</p>
+        <p>結合軟體開發與硬體整合、服務橫跨數位娛樂、系統整合、應用軟體與設備規劃的專業團隊。我們持續打造具創新思維的產品與解決方案，協助客戶迎接數位轉型的挑戰。</p>
+      </div>
+      <div class="hero-image animate-on-scroll fade-right">
+        <div class="hero-circle" id="heroCircle">
+          <div class="hero-circle-content active" id="heroCircleContent">創新，是我們的DNA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="flow" id="web-flow">
+    <div class="flow__container">
+      <h2 class="flow__title">我們提供完整的產品與服務，支援從研發到落地的每一步。</h2>
+
+      <div class="flow__grid" id="services">
+        <article class="flow-card flow-card--tall">
+          <div class="flow-card__media">
+            <img src="./pic/work001.jpg" alt="軟體程式開發" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>軟體程式開發</h3>
+              <p>從需求分析到系統上線，打造高效、穩定且符合客戶需求的軟體應用。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--short">
+          <div class="flow-card__media">
+            <img src="./pic/work002.jpg" alt=" 硬體設備研發" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3> 硬體設備研發</h3>
+              <p>結合創新設計與嚴謹測試，提供兼具性能與可靠度的硬體解決方案。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--tall">
+          <div class="flow-card__media">
+            <img src="./pic/work003.jpg" alt="系統整合建制" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>系統整合建制</h3>
+              <p>整合軟硬體與各式應用系統，讓不同平台間協作更順暢、運行更高效。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--short">
+          <div class="flow-card__media">
+            <img src="./pic/work004.jpg" alt="客製化服務" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>客製化服務</h3>
+              <p>依照實際使用場景與需求，量身規劃專屬解決方案，提升整體效能與價值。</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script src="./js/flow.js" defer></script>
+
+
+  <!-- 諾思快訊 -->
+  <section class="news-section" id="news-section">
+    <div class="news-container">
+      <h2 class="news-title animate-on-scroll fade-up">諾思快訊</h2>
+      <div class="news-grid" id="newsGrid"></div>
+      <div class="news-empty" id="newsEmpty" style="display:none">（目前沒有可顯示的快訊）</div>
+    </div>
+  </section>
+
+
+
+
+  <!-- 公司環境（無縫跑馬燈） -->
+  <section class="company-photos" id="company-photos">
+    <div class="photos-container">
+      <h2 class="animate-on-scroll fade-up">公司環境</h2>
+
+      <!-- 第一排 -->
+      <div class="photo-slider" id="row1">
+        <div class="photo-item" data-title="公司外觀" data-desc="">
+          <img src="./pic/env01.jpg" alt="公司外觀" />
+          <div class="photo-caption"><strong>公司外觀</strong></div>
+        </div>
+		<div class="photo-item" data-title="公司外觀" data-desc="">
+          <img src="./pic/env02.jpg" alt="公司外觀" />
+          <div class="photo-caption"><strong>公司外觀</strong></div>
+        </div>
+        <div class="photo-item" data-title="階梯活動空間" data-desc="休閒、圖書區、舉辦多元活動">
+          <img src="./pic/env03.jpg" alt="階梯活動空間" />
+          <div class="photo-caption"><strong>階梯活動空間</strong>｜休閒、圖書區、舉辦多元活動</div>
+        </div>
+        <div class="photo-item" data-title="員工餐廳" data-desc="像咖啡廳一樣舒適自在">
+          <img src="./pic/env04.jpg" alt="員工餐廳" />
+          <div class="photo-caption"><strong>員工餐廳</strong>｜像咖啡廳一樣舒適自在</div>
+        </div>
+        <div class="photo-item" data-title="健身房" data-desc="五臟俱全的運動器械">
+          <img src="./pic/env05.jpg" alt="健身房" />
+          <div class="photo-caption"><strong>健身房</strong>｜五臟俱全的運動器械</div>
+        </div>
+
+      </div>
+
+      <!-- 第二排（反向） -->
+      <div class="photo-slider" id="row2">
+	  
+        <div class="photo-item" data-title="辦公區域" data-desc="寬敞的辦公空間，提供升降座、人體工學椅">
+          <img src="./pic/env06.jpg" alt="辦公區域" />
+          <div class="photo-caption"><strong>辦公區域</strong>｜寬敞空間、升降座、人體工學椅</div>
+        </div>	  
+	  
+        <div class="photo-item" data-title="按摩椅室" data-desc="溫馨放鬆的個人空間">
+          <img src="./pic/env07.jpg" alt="按摩椅室" />
+          <div class="photo-caption"><strong>按摩椅室</strong>溫馨放鬆的個人空間</div>
+        </div>
+        <div class="photo-item" data-title="飛鏢遊戲區" data-desc="社團活動">
+          <img src="./pic/env08.jpg" alt="飛鏢遊戲區" />
+          <div class="photo-caption"><strong>飛鏢遊戲區</strong>｜社團活動</div>
+        </div>
+        <div class="photo-item" data-title="會議室" data-desc="設備齊全，確保會議品質">
+          <img src="./pic/env09.jpg" alt="會議室" />
+          <div class="photo-caption"><strong>會議室</strong>｜設備齊全，確保會議品質</div>
+        </div>
+        <div class="photo-item" data-title="甜點櫃" data-desc="糖份補給站">
+          <img src="./pic/env10.jpg" alt="甜點櫃" />
+          <div class="photo-caption"><strong>甜點櫃</strong>｜糖份補給站</div>
+        </div>
+      </div>
+
+
+
+
+      </div>
+
+      <div class="see-more-wrap">
+        <a href="environment.html" class="cta-button">查看更多公司環境與員工福利</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruit -->
+  <section id="recruit">
+    <div class="recruit-container">
+      <h2 class="recruit-title">人才招募</h2>
+      <p class="recruit-sub">我們相信的價值<br>專業・熱誠・國際視野・永續發展<br>持續向世界學習，也持續為世界創造價值。</p>
+      <div class="recruit-grid">
+		<div class="recruit-pill">
+		  <img src="./pic/$3.png" alt="">
+		  <div class="rp-title">個人成長</div>
+		  <div class="rp-list">
+			年薪保障<br>
+			教育訓練津貼<br>
+			每年調薪機會<br>
+			升遷機會
+		  </div>
+		</div>
+		
+		<div class="recruit-pill">
+		  <img src="./pic/$2.png" alt="">
+		  <div class="rp-title">員工關懷</div>
+		  <div class="rp-list">
+			團體保險<br>
+			年度健康檢查<br>
+			EAP員工協助方案<br>
+			健康講座
+		  </div>
+		</div>
+
+		<div class="recruit-pill">
+		  <img src="./pic/$.png" alt="">
+		  <div class="rp-title">獎金福利</div>
+		  <div class="rp-list">
+			三節禮金<br>
+			生日禮金<br>
+			育兒津貼<br>
+			婚喪喜慶補助
+		  </div>
+		</div>
+
+		<div class="recruit-pill">
+		  <img src="./pic/$4.png" alt="">
+		  <div class="rp-title">休假制度</div>
+		  <div class="rp-list">
+			年假12天起<br>
+			每年5天全薪病假<br>
+			每年特殊假<br>
+			年資假
+		  </div>
+		</div>
+      </div>
+      <div class="recruit-cta">
+        <a class="cta-button" href="https://www.104.com.tw/company/1a2x6bm2mj?jobsource=checkc" target="_blank">加入我們</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-container">
+      <div class="contact-card">
+        <h3>聯絡方式</h3>
+        <p><strong>地址：</strong>台北市內湖區南京東路六段372號</p>
+        <p><strong>服務時間：</strong>週一至週五 9:00–18:00</p>
+        <p><strong>Email：</strong><a href="mailto:HR@north.com.tw">HR@north.com.tw</a></p>
+      </div>
+      <div class="map-embed">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" 
+          src="https://www.google.com/maps?q=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%85%A7%E6%B9%96%E5%8D%80%E5%8D%97%E4%BA%AC%E6%9D%B1%E8%B7%AF%E5%85%AD%E6%AE%B5372%E8%99%9F&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2025 North co. 諾思資訊. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="關閉">✕</button>
+    <button class="lb-prev" id="lbPrev" aria-label="上一張">❮</button>
+    <div class="lightbox-inner">
+      <img class="lightbox-img" id="lbImg" alt="放大圖片" />
+      <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
+    <button class="lb-next" id="lbNext" aria-label="下一張">❯</button>
+  </div>
+
+<script>
+  const NEWS_JSON_URL = './north.json';
+
+  const heroCircleContent = document.getElementById('heroCircleContent');
+  if (heroCircleContent) {
+    const texts = ['創新，是我們的DNA','專業，是成長的基礎','真誠，是合作的起點','團隊，是家的延伸'];
+    let currentTextIndex = 0;
+    function rotateHeroText(){
+      heroCircleContent.classList.remove('active');
+      setTimeout(()=>{
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        heroCircleContent.textContent = texts[currentTextIndex];
+        heroCircleContent.classList.add('active');
+      }, 500);
+    }
+    heroCircleContent.classList.add('active');
+    setInterval(rotateHeroText, 4000);
+  }
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        const c = entry.target.classList;
+        if(c.contains('fade-up'))   entry.target.style.animation='fadeInUp .8s ease forwards';
+        else if(c.contains('fade-left'))  entry.target.style.animation='fadeInLeft .8s ease forwards';
+        else if(c.contains('fade-right')) entry.target.style.animation='fadeInRight .8s ease forwards';
+        else if(c.contains('fade-in'))    entry.target.style.animation='fadeIn .8s ease forwards';
+      }
+    });
+  }, {threshold:.1, rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // ====== News loader ======
+  let NEWS_ITEMS = [];
+  async function loadNews(){
+    try{
+      const res = await fetch(NEWS_JSON_URL, {cache:'no-store'});
+      if(!res.ok) throw new Error('載入失敗');
+      const data = await res.json();
+      NEWS_ITEMS = Array.isArray(data.items) ? data.items : [];
+      renderNewsGrid(NEWS_ITEMS);
+    }catch(err){
+      console.error('讀取 news.json 失敗：', err);
+      const empty = document.getElementById('newsEmpty');
+      if (empty) empty.style.display='block';
+    }
+  }
+
+  function cardHTML(item){
+    const thumb = item.thumbnail || (item.images && item.images[0]) || '';
+    return `
+      <div class="news-item" data-id="${item.id}">
+        <div class="news-thumbnail" style="background-image:url('${thumb}')">
+          <div class="news-date">${item.date || ''}</div>
+        </div>
+        <div class="news-content">
+          <div class="news-category">${item.category || ''}</div>
+          <h3>${item.title || ''}</h3>
+          <p class="news-excerpt">${item.excerpt || ''}</p>
+          <span class="read-more">閱讀更多 →</span>
+        </div>
+      </div>`;
+  }
+
+  function renderNewsGrid(items){
+    const grid = document.getElementById('newsGrid');
+    if(!grid) return;
+    if(!items.length){
+      const empty = document.getElementById('newsEmpty');
+      if (empty) empty.style.display='block';
+      grid.innerHTML='';
+      return;
+    }
+    items.sort((a,b)=> new Date((b.date||'').replaceAll('/','-')) - new Date((a.date||'').replaceAll('/','-')));
+    grid.innerHTML = items.map(cardHTML).join('');
+    grid.querySelectorAll('.news-item').forEach(el=>{
+      el.addEventListener('click',()=> openNewsModal(el.getAttribute('data-id')));
+    });
+  }
+
+  const newsModal = document.getElementById('newsModal');
+  const newsClose = document.getElementById('newsClose');
+
+  function openNewsModal(id){
+    if(!newsModal) return;
+    const item = NEWS_ITEMS.find(n=> String(n.id) === String(id));
+    if(!item) return;
+    const modalText   = document.getElementById('modalText');
+    const modalImages = document.getElementById('modalImages');
+    modalText.innerHTML = `
+      <div class="category">${item.category||''}</div>
+      <div class="date">${item.date||''}</div>
+      <h2>${item.title||''}</h2>
+      ${item.contentHtml||''}`;
+    const imgs = Array.isArray(item.images)? item.images : [];
+    if(imgs.length){
+      modalImages.innerHTML =
+        imgs.map((src,i)=>`<img src="${src}" alt="快訊圖片 ${i+1}" class="modal-image ${i===0?'active':''}" id="modalImage-${i}">`).join('') +
+        (imgs.length>1? `<div class="image-nav">${imgs.map((_,i)=>`<button class="image-nav-btn ${i===0?'active':''}" data-index="${i}">圖片 ${i+1}</button>`).join('')}</div>` : '');
+      modalImages.querySelectorAll('.image-nav-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const idx = Number(btn.getAttribute('data-index'));
+          modalImages.querySelectorAll('.modal-image').forEach((im,i)=> im.classList.toggle('active', i===idx));
+          modalImages.querySelectorAll('.image-nav-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+        });
+      });
+    }else{
+      modalImages.innerHTML = '';
+    }
+    newsModal.classList.add('active');
+    document.body.style.overflow='hidden';
+  }
+
+  function closeNewsModal(){
+    if(!newsModal) return;
+    newsModal.classList.remove('active');
+    document.body.style.overflow='auto';
+  }
+  if (newsClose) newsClose.addEventListener('click', closeNewsModal);
+  if (newsModal) newsModal.addEventListener('click', e=>{ if(e.target===newsModal) closeNewsModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNewsModal(); });
+
+      // ====== 無縫跑馬燈（滿版、自動複製、尾接頭、無閃爍） ======
+// 無縫跑馬燈（滿版、無留白、無閃爍、可暫停）
+function setupSeamlessMarquee(rowId, { reverse = false, gap = 32, speed = 60 } = {}) {
+  const track = document.getElementById(rowId);
+  if (!track) return;
+
+  const container = track.parentElement;         // 外層：需 overflow:hidden
+  track.style.display = 'flex';
+  track.style.gap = gap + 'px';
+  track.style.willChange = 'transform';
+  track.style.whiteSpace = 'nowrap';
+  track.style.visibility = 'hidden';             // 建構完成前避免初始留白閃一下
+
+  const originals = Array.from(track.children);
+
+  // 幫助量測：回傳指定元素陣列的「內容寬度 + gap」總和
+  const measure = (els) => els.reduce((sum, el, i) => {
+    const rect = el.getBoundingClientRect();
+    return sum + rect.width + (i ? gap : 0);
+  }, 0);
+
+  // 等圖片載入完成再開始（避免量測錯誤）
+  const imgs = track.querySelectorAll('img');
+  const whenImagesReady = Promise.all(
+    Array.from(imgs).map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(res => {
+        img.addEventListener('load', res, { once: true });
+        img.addEventListener('error', res, { once: true });
+      });
+    })
+  );
+
+  whenImagesReady.then(() => {
+    // 先清空，建立： [前一輪][當前輪][下一輪] 3 倍內容
+    track.innerHTML = '';
+    const frag = document.createDocumentFragment();
+
+    // 前一輪
+    originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+    // 當前輪（用原件，節省記憶體）
+    originals.forEach(el => frag.appendChild(el));
+    // 下一輪
+    originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+
+    track.appendChild(frag);
+
+    // 量測一個循環的寬度
+    const cycleEls = Array.from(track.children).slice(originals.length, originals.length * 2);
+    let cycleWidth = measure(cycleEls);
+
+    // 若一輪寬度還不足以覆蓋視窗，繼續「成對」往兩側補
+    const needWidth = container.getBoundingClientRect().width * 1.2; // 稍微超過，保險
+    while (cycleWidth < needWidth) {
+      // 往右補一輪、往左補一輪
+      originals.forEach(el => track.appendChild(el.cloneNode(true)));
+      originals.slice().reverse().forEach(el => track.insertBefore(el.cloneNode(true), track.firstChild));
+      // 重新量測單輪寬度（原樣本仍為 originals 的平均，單輪寬度不變）
+      if (measure(cycleEls) > 0) cycleWidth = measure(cycleEls);
+      else break; // 以防萬一
+    }
+
+    // 起始定位：讓畫面落在「中間那一輪」的左邊界（這樣兩側都已滿）
+    let pos = -cycleWidth;
+
+    // 動畫：位移到 ±(2 * cycleWidth) 邊界時，用數學回捲，畫面不會跳
+    let paused = false;
+    function tick() {
+      if (!paused) {
+        const delta = (speed / 60) * (reverse ? 1 : -1); // 假設 60fps
+        pos += delta;
+
+        if (!reverse && pos <= -2 * cycleWidth) pos += cycleWidth;   // 左移過頭 → 往右回捲一輪
+        if ( reverse && pos >= 0)               pos -= cycleWidth;   // 右移過頭 → 往左回捲一輪
+
+        track.style.transform = `translateX(${pos}px)`;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // 懸停暫停
+    track.addEventListener('mouseenter', () => paused = true);
+    track.addEventListener('mouseleave', () => paused = false);
+
+    // 顯示並開始
+    track.style.visibility = 'visible';
+    requestAnimationFrame(tick);
+
+    // 監聽 resize：重新建構，確保 RWD 下也不留白
+    let rid = null;
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(rid);
+      rid = requestAnimationFrame(() => {
+        // 重新初始化（簡單作法：遞迴重設）
+        setupSeamlessMarquee(rowId, { reverse, gap, speed });
+      });
+    }, { passive: true, once: true }); // 只做一次重建，避免頻繁
+  });
+}
+
+
+
+
+
+
+
+  // 第一排：正向，從最後 3 張起頭（例：8 張 => 顯示 6,7,8,1,2...）
+  setupSeamlessMarquee('row1', {reverse:false, gap:32, speed:55, startOffsetItems:3});
+  // 第二排：反向同理
+  setupSeamlessMarquee('row2', {reverse:true, gap:32, speed:55, startOffsetItems:3});
+
+  // ====== Services：進場交錯動畫（首次進 viewport 執行） ======
+  const serviceCards = document.querySelectorAll('.flow-card');
+  const serviceObserver = new IntersectionObserver((entries,obs)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx = [...serviceCards].indexOf(entry.target);
+        setTimeout(()=> entry.target.classList.add('in'), idx*120);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold: .2});
+  serviceCards.forEach(card=> serviceObserver.observe(card));
+
+  // 初始化快訊
+  document.addEventListener('DOMContentLoaded', loadNews);
+</script>
+
+</body>
+</html>
