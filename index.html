@@ -1,54 +1,1190 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>North — Entrance</title>
-  <meta name="theme-color" content="#82bdcc" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North co. 諾思資訊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/index.css" />
-  <link rel="preload" href="./fonts/ArgonR.otf" as="font" type="font/otf" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/flow.css" /> 
+  <meta name="description" content="North co. 諾思資訊 — 結合軟體開發與硬體整合、服務橫跨數位娛樂、系統整合、應用軟體與設備規劃的專業團隊。以深厚的技術力與國際合作經驗為基礎，我們持續打造具創新思維的產品與解決方案，協助客戶迎接數位轉型的挑戰。">
+  
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:"Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;
+      line-height:1.6;color:#333;background:#f6f7f9;overflow-x:hidden
+    }
+    @font-face{
+      font-family:"Argon";
+      src: url("./fonts/Argon.woff2") format("woff2"),
+	  	   url("./fonts/ArgonR.otf") format("opentype"),
+           url("./fonts/Argon.woff") format("woff");
+      font-display:swap;
+    }
+    .logo-text,
+    .hero-content h1{
+      font-family:"Argon","Century Gothic","Microsoft JhengHei","PingFang TC","Helvetica Neue",Arial,sans-serif;letter-spacing: .10em; 
+    }
+
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes shimmer{0%{left:-75%}100%{left:125%}}
+
+    /* navbar */
+    .navbar{position:fixed;top:0;width:100%;background:rgba(246,247,249,1);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;transition:all .3s ease}
+    .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}
+    .logo{display:flex;align-items:center;gap:.7rem}
+    .logo img{width:64px;border-radius: 12px; height:64px}
+    .logo-text{font-size:1.85rem;font-weight:700;color:#82bdcc;line-height:1}
+    .nav-links{display:flex;list-style:none;gap:2rem}
+    .nav-links a{text-decoration:none;color:#333;font-weight:500;transition:color .3s ease}
+    .nav-links a:hover{color:#82bdcc}
+    .cta-button{background:linear-gradient(135deg,#82bdcc,#6ba3b3);color:#fff;padding:.75rem 1.5rem;border:none;border-radius:25px;text-decoration:none;font-weight:600;transition:all .3s ease;box-shadow:0 4px 15px rgba(130,189,204,.3);position:relative;overflow:hidden}
+    .cta-button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(130,189,204,.4)}
+    .cta-button::before{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:rgba(255,255,255,.3);transform:skewX(-20deg);transition:all .7s ease}
+    .cta-button:hover::before{animation:shimmer .7s ease}
+
+    /* News */
+    .news-section{padding:5rem 0;background:#fff}
+    .news-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+    .news-title{text-align:center;font-size:2.5rem;font-weight:700;color:#333;margin-bottom:3rem}
+
+    .news-slider-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+    .news-slider-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+    .news-slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+      color: #333;
+      cursor: pointer;
+      z-index: 10;
+      transition: all .3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .news-slider-arrow:hover {
+      background: #82bdcc;
+      color: #fff;
+      border-color: #82bdcc;
+    }
+    .news-slider-arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .news-slider-arrow.prev {
+      left: -20px;
+    }
+    .news-slider-arrow.next {
+      right: -20px;
+    }
+    
+    /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+    @media (max-width: 1024px) { 
+      .news-slider-arrow.prev { left: -10px; }
+      .news-slider-arrow.next { right: -10px; }
+    }
+
+    .news-grid{
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .news-item{
+      background:linear-gradient(135deg,#f6f7f9,#e8f4f8);
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+      transition:all .3s ease;
+      cursor:pointer;
+      flex-shrink: 0; 
+      box-sizing: border-box; 
+    }
+
+    .news-item:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.15)}
+    .news-thumbnail{width:100%;height:200px;background-size:cover;background-position:center;position:relative}
+    .news-date{position:absolute;top:1rem;right:1rem;background:rgba(130,189,204,.9);color:#fff;padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:500}
+    .news-content{padding:1.5rem}
+    .news-category{color:#82bdcc;font-size:.9rem;font-weight:600;margin-bottom:.5rem}
+    .news-item h3{font-size:1.3rem;font-weight:700;color:#333;margin-bottom:1rem;line-height:1.4}
+    .news-excerpt{color:#666;line-height:1.6;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .read-more{color:#82bdcc;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .3s ease}
+    .read-more:hover{color:#6ba3b3}
+    .news-empty{color:#888;text-align:center}
+
+    /* hero (原樣) */
+    .hero{min-height:60vh;display:flex;align-items:center;padding:0 2rem;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);position:relative;overflow:hidden}
+    .hero-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .hero-content h1{font-size:3.5rem;font-weight:800;color:#333;margin-bottom:1rem;line-height:1.2}
+    .hero-content .subtitle{font-size:1.5rem;color:#82bdcc;margin-bottom:2rem;font-weight:600}
+    .hero-content p{font-size:1.1rem;color:#666;margin-bottom:2rem;line-height:1.8}
+    .hero-circle{width:300px;height:300px;border-radius:50%;background:linear-gradient(135deg,#82bdcc,#6ba3b3);display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 20px 40px rgba(130,189,204,.3);position:relative;overflow:hidden}
+    .hero-circle-content{text-align:center;color:#fff;font-size:1.2rem;font-weight:600;padding:2rem;opacity:0;transition:opacity .5s ease-in-out}
+    .hero-circle-content.active{opacity:1}
+
+    .animate-on-scroll{opacity:0;transform:translateY(30px);transition:all .8s ease}
+    .animate-on-scroll.fade-up{animation:fadeInUp .8s ease forwards}
+    .animate-on-scroll.fade-left{animation:fadeInLeft .8s ease forwards}
+    .animate-on-scroll.fade-right{animation:fadeInRight .8s ease forwards}
+    .animate-on-scroll.fade-in{animation:fadeIn .8s ease forwards}
+
+    /* services (原樣) */
+    .services{padding:5rem 0;background:#fff}
+    .services-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .services-content .kickers{color:#82bdcc;font-weight:700;letter-spacing:.2em;font-size:.9rem;margin-bottom:1rem}
+    .services-content h2{font-size:2.5rem;font-weight:800;color:#333;margin-bottom:1rem;line-height:1.2}
+    .services-content p{color:#666;margin-bottom:2rem;line-height:1.8}
+    .services-tags{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:2rem}
+    .service-tag{background:linear-gradient(135deg,#82bdcc,#6ba3b3);color:#fff;padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+
+    .flow__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem}
+	.flow {
+      padding: 5rem 0;
+      background: linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);
+    }
+    .flow-card{
+	  opacity:0;
+	  transform:translateY(var(--offset,40px));
+	  transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s;
+	}
+	.flow-card {
+      border: 1px solid transparent;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+    .flow-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .flow-card.in{opacity:1;transform:translateY(0)}
+    .flow-card:nth-child(odd){--offset:48px}
+    .flow-card:nth-child(even){--offset:-48px}
+    .flow-card__overlay{
+      position:absolute;inset:0;display:flex;align-items:flex-end;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+      padding:1.1rem;
+    }
+    .flow-card__text h3{
+      color:#fff;font-weight:800;letter-spacing:.02em;
+      font-size:1.25rem;line-height:1.25;text-shadow:0 4px 18px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.8);
+      margin-bottom:.35rem;
+    }
+    .flow-card__text p{
+      color:#eaf3f6;font-size:1.02rem;line-height:1.6;
+      text-shadow:0 3px 14px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.75);
+    }
+
+    /* company photos (原樣) */
+    .company-photos{padding:5rem 0;background:#fff;overflow:hidden}
+    .photos-container{max-width:1200px;margin:0 auto;text-align:center;padding:0 2rem}
+    .photos-container h2{font-size:2.5rem;font-weight:700;color:#333;margin-bottom:1.5rem}
+    .photos-sub{color:#82bdcc;margin-bottom:2rem}
+    .photo-slider{display:flex;gap:2rem;margin-bottom:2rem;will-change:transform}
+    .photo-item{position:relative;flex-shrink:0;width:300px;height:200px;border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.1);cursor:pointer}
+    .photo-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+    .photo-item:hover img{transform:scale(1.05)}
+    .photo-caption{position:absolute;left:0;right:0;bottom:0;padding:.8rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.95rem;opacity:0;transform:translateY(10px);transition:all .25s ease}
+    .photo-item:hover .photo-caption{opacity:1;transform:translateY(0)}
+
+    .see-more-wrap{margin-top:1rem;text-align:center;}
+
+    /* lightbox (原樣) */
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
+    .lightbox.active{display:flex}
+    .lightbox-inner{max-width:min(95vw,1200px);max-height:90vh;position:relative}
+    .lightbox-img{max-width:100%;max-height:80vh;border-radius:12px;display:block;margin:0 auto}
+    .lightbox-caption{color:#fff;text-align:center;margin-top:1rem;line-height:1.6}
+    .lb-close,.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:none;color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .lb-close{top:24px;right:24px;transform:none}
+    .lb-prev{left:-64px}
+    .lb-next{right:-64px}
+    .lb-prev:hover,.lb-next:hover,.lb-close:hover{background:rgba(255,255,255,.3)}
+    @media(max-width:1024px){.lb-prev{left:8px}.lb-next{right:8px}} /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+
+    .philosophy{padding:5rem 0;background:#fff}
+    .philosophy-container{max-width:1200px;margin:0 auto;padding:0 2rem;text-align:center}
+    .philosophy h2{font-size:2.5rem;font-weight:700;color:#333;margin-bottom:3rem}
+    .philosophy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:3rem}
+    .philosophy-item{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);padding:2rem;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.05);transition:transform .3s ease}
+    .philosophy-item:hover{transform:translateY(-5px)}
+    .philosophy-item h3{font-size:1.3rem;font-weight:600;color:#82bdcc;margin-bottom:1rem}
+    .philosophy-item p{color:#666;line-height:1.6}
+
+    /* recruit (原樣) */
+    #recruit{padding:5rem 0;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%)}
+    .recruit-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+    .recruit-title{font-size:2.2rem;font-weight:800;margin-bottom:1rem;color:#333;text-align:center}
+    .recruit-sub{color:#666;text-align:center;margin-bottom:1.5rem}
+    .recruit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
+    .recruit-cta{text-align:center;margin-top:1.5rem}
+
+    #contact{padding:5rem 0;background:#fff}
+    .contact-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.2fr 1fr;gap:2rem}
+    .contact-card{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);padding:1.5rem 1.25rem;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    .contact-card h3{color:#333;margin-bottom:.75rem}
+    .contact-card p{color:#555;margin:.25rem 0}
+    .map-embed iframe{width:100%;height:100%;min-height:320px;border:0;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+
+    .footer{background:#333;color:#fff;padding:3rem 0;text-align:center}
+    .footer-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+	
+	/* 卡片外框 (原樣) */
+	.recruit-pill{
+	  display:flex;
+	  flex-direction:column;
+	  align-items:center;
+	  text-align:center;
+	  padding:18px 20px;
+	  background:#fff;
+	  border:1px solid #e6e9ef;
+	  border-radius:25px;
+	  overflow: hidden;
+	  box-shadow:0 4px 16px rgba(0,0,0,.06);
+	  color:#374151;
+	  line-height:1.85;
+	}
+	.recruit-pill > img{
+	  width:64px;
+	  height:64px;
+	  margin-bottom: -6px;   
+	  object-fit:contain;
+	  display:block;
+	}
+	.recruit-pill .rp-title{
+	  font-weight:900;
+	  font-size:18px;
+	  color:#111827;
+	  margin: 2px 0 6px;  
+	}
+	.recruit-pill .rp-list{
+	  font-size:14px;
+	  color:#4b5563;
+	  margin-top: 0;
+	  line-height: 1.7;  
+	}
+
+    /* ===== News Modal (快訊彈窗) ===== */
+    .news-modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      z-index:1900;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+      box-sizing: border-box;
+    }
+    .news-modal.active{
+      display:flex;
+      animation: fadeIn .3s ease;
+    }
+    .news-modal__inner{
+      position:relative;
+      background:#fff;
+      border-radius:12px;
+      max-width:960px; 
+      width:100%;
+      max-height:85vh;
+      overflow-y:auto;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1.5rem;
+      padding:2rem;
+      box-sizing: border-box;
+    }
+
+    @media(min-width: 1024px){ /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+      .news-modal__inner{
+        grid-template-columns: 4fr 5fr; 
+        gap: 2rem; 
+        padding:2.5rem;
+      }
+      .news-modal__images:not(:empty) + .news-modal__text{
+          grid-row: 1; 
+      }
+      .news-modal__images:not(:empty){
+          grid-row: 1; 
+      }
+      .news-modal__images:empty + .news-modal__text{
+          grid-column: 1 / -1;
+      }
+    }
+
+    .news-modal__close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      border:none;
+      background:#f0f0f0;
+      color:#555;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all .2s ease;
+      z-index: 10;
+    }
+    .news-modal__close:hover{
+      background:#e0e0e0;
+      color:#000;
+    }
+
+    .news-modal__text .category{
+      color:#82bdcc; 
+      font-weight:600;
+      margin-bottom:.25rem;
+    }
+    .news-modal__text .date{
+      font-size:.9rem;
+      color:#777;
+      margin-bottom:1rem;
+    }
+    .news-modal__text h2{
+      font-family:"Argon","Century Gothic","Microsoft JhengHei",sans-serif;
+      font-size:1.8rem;
+      font-weight:700;
+      color:#222;
+      margin-bottom:1rem;
+      line-height:1.3;
+    }
+    .news-modal__text p,
+    .news-modal__text ul{
+      color:#555;
+      line-height:1.7;
+      margin-bottom:1rem;
+    }
+    .news-modal__text ul{
+      padding-left:1.2rem;
+    }
+    .news-modal__text li{
+      margin-bottom: 0.5rem;
+    }
+
+    .news-modal__images .modal-image{
+      width:100%;
+      height:auto;
+      border-radius:8px;
+      display:none;
+      margin-bottom:.75rem;
+      border:1px solid #eee;
+      cursor: zoom-in;
+    }
+    .news-modal__images .modal-image.active{
+      display:block; 
+    }
+    
+    .image-nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content: center; 
+      gap: .75rem; 
+      margin-top: 1rem; 
+    }
+    .image-nav-btn{
+      background: #ccc; 
+      border: none;
+      border-radius: 50%; 
+      width: 12px;
+      height: 12px;
+      padding: 0;
+      font-size: 0; 
+      color: transparent;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .image-nav-btn.active,
+    .image-nav-btn:hover{
+      background: #82bdcc; 
+      border-color: #82bdcc;
+      transform: scale(1.2); 
+    }
+    
+    /* ===== [RWD 修復 1] 補上漢堡選單 CSS ===== */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1002;
+    }
+    .hamburger {
+      display: block;
+      position: relative;
+      width: 24px;
+      height: 2px;
+      background: #333;
+      transition: all .3s ease;
+    }
+    .hamburger::before,
+    .hamburger::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 24px;
+      height: 2px;
+      background: #333;
+      transition: all .3s ease;
+    }
+    .hamburger::before { top: -8px; }
+    .hamburger::after { bottom: -8px; }
+
+    .mobile-nav {
+      display: none; 
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(246, 247, 249, .98);
+      backdrop-filter: blur(10px);
+      z-index: 1001;
+      padding-top: 100px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease;
+      transform: translateY(-20px);
+    }
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mobile-nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: color .3s ease;
+    }
+    .mobile-nav-links a:hover {
+      color: #82bdcc;
+    }
+
+    .nav-active .mobile-nav {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-active .hamburger {
+      background: transparent;
+    }
+    .nav-active .hamburger::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+    .nav-active .hamburger::after {
+      bottom: 0;
+      transform: rotate(-45deg);
+    }
+    /* ===== [RWD 修復 1] 漢堡選單 CSS 結束 ===== */
+
+
+    /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+    @media(max-width:1024px){
+      .hero-container{grid-template-columns:1fr;text-align:center}
+      .hero-content h1{font-size:2.5rem}
+      .hero-circle{width:250px;height:250px}
+      .services-container{grid-template-columns:1fr;gap:2rem}
+      
+      .nav-links{display:none} 
+      .nav-toggle { display: block; } /* [RWD 修復 1] 顯示漢堡按鈕 */
+      .mobile-nav { display: flex; } /* [RWD 修復 1] 啟用手機選單 */
+      
+      .flow__grid{grid-template-columns:1fr;gap:2rem}
+      
+      .contact-container{grid-template-columns:1fr} /* [RWD 修復 3] 地圖堆疊 */
+    }
+	
+  </style>
 </head>
 <body>
-  <!-- 粒子背景 -->
-  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="./icon/northlogo.png" alt="north co. Logo" />
+        <span class="logo-text">north co.</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">首頁</a></li>
+        <li><a href="#services">解決方案</a></li>
+        <li><a href="#company-photos">公司環境</a></li>
+        <li><a href="#recruit">人才招募</a></li>
+        <li><a href="#contact">聯絡方式</a></li>
+      </ul>
+      
+      <button class="nav-toggle" id="navToggle" aria-label="開啟選單">
+        <span class="hamburger"></span>
+      </button>
 
-  <!-- 追光層 -->
-  <div id="spotlight" aria-hidden="true"></div>
-
-  <!-- 主舞台 -->
-  <main class="stage">
-    <!-- LOGO + 霓虹環 -->
-    <div class="logo-wrap">
-
-      <img src="./icon/northlogo.png" alt="諾思資訊 North" class="logo" />
     </div>
+  </nav>
 
-    <!-- 標語 -->
-    <h1 class="brand glitch" data-text="north co.">north co.</h1>
-    <p class="tagline">諾思資訊｜專業・熱誠・國際視野・永續發展</p>
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="#home">首頁</a></li>
+      <li><a href="#services">解決方案</a></li>
+      <li><a href="#company-photos">公司環境</a></li>
+      <li><a href="#recruit">人才招募</a></li>
+      <li><a href="#contact">聯絡方式</a></li>
+    </ul>
+  </div>
 
-    <!-- 進入按鈕 -->
-    <button id="enterBtn" class="enter neon" aria-label="Enter north">
-      <span>Enter North</span>
-      <svg class="arrow" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-        <path d="M5 12h12m0 0l-5-5m5 5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-content animate-on-scroll fade-left">
+        <h1>north co.</h1>
+        <div class="subtitle">諾思資訊</div>
+        <p>成立於2022年。</p>
+        <p>結合軟體開發與硬體整合、服務橫跨數位娛樂、系統整合、應用軟體與設備規劃的專業團隊。我們持續打造具創新思維的產品與解決方案，協助客戶迎接數位轉型的挑戰。</p>
+      </div>
+      <div class="hero-image animate-on-scroll fade-right">
+        <div class="hero-circle" id="heroCircle">
+          <div class="hero-circle-content active" id="heroCircleContent">創新，是我們的DNA</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 提示 -->
-    <div class="hint">按下 Enter 鍵或點擊按鈕進入</div>
-  </main>
+  <section class="flow" id="web-flow">
+    <div class="flow__container">
+      <h2 class="flow__title">我們提供完整的產品與服務，支援從研發到落地的每一步。</h2>
 
-  <!-- 角落資訊 -->
-  <footer class="corner">
-    <span>© <span id="year"></span> 諾思資訊股份有限公司</span>
+      <div class="flow__grid" id="services">
+        <article class="flow-card flow-card--tall">
+          <div class="flow-card__media">
+            <img src="./pic/work001.jpg" alt="軟體程式開發" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>軟體程式開發</h3>
+              <p>從需求分析到系統上線，打造高效、穩定且符合客戶需求的軟體應用。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--short">
+          <div class="flow-card__media">
+            <img src="./pic/work002.jpg" alt=" 硬體設備研發" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3> 硬體設備研發</h3>
+              <p>結合創新設計與嚴謹測試，提供兼具性能與可靠度的硬體解決方案。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--tall">
+          <div class="flow-card__media">
+            <img src="./pic/work003.jpg" alt="系統整合建制" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>系統整合建制</h3>
+              <p>整合軟硬體與各式應用系統，讓不同平台間協作更順暢、運行更高效。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-card flow-card--short">
+          <div class="flow-card__media">
+            <img src="./pic/work004.jpg" alt="客製化服務" loading="lazy">
+          </div>
+          <div class="flow-card__overlay">
+            <div class="flow-card__text">
+              <h3>客製化服務</h3>
+              <p>依照實際使用場景與需求，量身規劃專屬解決方案，提升整體效能與價值。</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script src="./js/flow.js" defer></script>
+
+
+  <section class="news-section" id="news-section">
+    <div class="news-container">
+      <h2 class="news-title animate-on-scroll fade-up">諾思快訊</h2>
+      
+      <div class="news-slider-container">
+        <button class="news-slider-arrow prev" id="newsPrev" aria-label="上一頁">❮</button>
+        <div class="news-slider-wrapper" id="newsSliderWrapper">
+          <div class="news-grid" id="newsGrid">
+            </div>
+        </div>
+        <button class="news-slider-arrow next" id="newsNext" aria-label="下一頁">❯</button>
+      </div>
+      <div class="news-empty" id="newsEmpty" style="display:none">（目前沒有可顯示的快訊）</div>
+    </div>
+  </section>
+
+
+
+
+  <section class="company-photos" id="company-photos">
+    <div class="photos-container">
+      <h2 class="animate-on-scroll fade-up">公司環境</h2>
+
+      <div class="photo-slider" id="row1">
+        <div class="photo-item" data-title="公司外觀" data-desc="">
+          <img src="./pic/env01.jpg" alt="公司外觀" />
+          <div class="photo-caption"><strong>公司外觀</strong></div>
+        </div>
+		<div class="photo-item" data-title="公司外觀" data-desc="">
+          <img src="./pic/env02.jpg" alt="公司外觀" />
+          <div class="photo-caption"><strong>公司外觀</strong></div>
+        </div>
+        <div class="photo-item" data-title="階梯活動空間" data-desc="休閒、圖書區、舉辦多元活動">
+          <img src="./pic/env03.jpg" alt="階梯活動空間" />
+          <div class="photo-caption"><strong>階梯活動空間</strong>｜休閒、圖書區、舉辦多元活動</div>
+        </div>
+        <div class="photo-item" data-title="員工餐廳" data-desc="像咖啡廳一樣舒適自在">
+          <img src="./pic/env04.jpg" alt="員工餐廳" />
+          <div class="photo-caption"><strong>員工餐廳</strong>｜像咖啡廳一樣舒適自在</div>
+        </div>
+        <div class="photo-item" data-title="健身房" data-desc="五臟俱全的運動器械">
+          <img src="./pic/env05.jpg" alt="健身房" />
+          <div class="photo-caption"><strong>健身房</strong>｜五臟俱全的運動器械</div>
+        </div>
+      </div>
+
+      <div class="photo-slider" id="row2">
+        <div class="photo-item" data-title="辦公區域" data-desc="寬敞的辦公空間，提供升降座、人體工學椅">
+          <img src="./pic/env06.jpg" alt="辦公區域" />
+          <div class="photo-caption"><strong>辦公區域</strong>｜寬敞空間、升降座、人體工學椅</div>
+        </div>	  
+        <div class="photo-item" data-title="按摩椅室" data-desc="溫馨放鬆的個人空間">
+          <img src="./pic/env07.jpg" alt="按摩椅室" />
+          <div class="photo-caption"><strong>按摩椅室</strong>溫馨放鬆的個人空間</div>
+        </div>
+        <div class="photo-item" data-title="飛鏢遊戲區" data-desc="社團活動">
+          <img src="./pic/env08.jpg" alt="飛鏢遊戲區" />
+          <div class="photo-caption"><strong>飛鏢遊戲區</strong>｜社團活動</div>
+        </div>
+        <div class="photo-item" data-title="會議室" data-desc="設備齊全，確保會議品質">
+          <img src="./pic/env09.jpg" alt="會議室" />
+          <div class="photo-caption"><strong>會議室</strong>｜設備齊全，確保會議品質</div>
+        </div>
+        <div class="photo-item" data-title="甜點櫃" data-desc="糖份補給站">
+          <img src="./pic/env10.jpg" alt="甜點櫃" />
+          <div class="photo-caption"><strong>甜點櫃</strong>｜糖份補給站</div>
+        </div>
+      </div>
+      </div>
+
+      <div class="see-more-wrap">
+        <a href="environment.html" class="cta-button">查看更多公司環境與員工福利</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="recruit">
+    <div class="recruit-container">
+      <h2 class="recruit-title">人才招募</h2>
+      <p class="recruit-sub">我們相信的價值<br>專業・熱誠・國際視野・永續發展<br>持續向世界學習，也持續為世界創造價值。</p>
+      <div class="recruit-grid">
+		<div class="recruit-pill">
+		  <img src="./pic/tr/$3.png" alt="">
+		  <div class="rp-title">個人成長</div>
+		  <div class="rp-list">
+			年薪保障<br>
+			教育訓練津貼<br>
+			每年調薪機會<br>
+			升遷機會
+		  </div>
+		</div>
+		<div class="recruit-pill">
+		  <img src="./pic/tr/$2.png" alt="">
+		  <div class="rp-title">員工關懷</div>
+		  <div class="rp-list">
+			團體保險<br>
+			年度健康檢查<br>
+			EAP員工協助方案<br>
+			健康講座
+		  </div>
+		</div>
+		<div class="recruit-pill">
+		  <img src="./pic/tr/$.png" alt="">
+		  <div class="rp-title">獎金福利</div>
+		  <div class="rp-list">
+			三節禮金<br>
+			生日禮金<br>
+			育兒津貼<br>
+			婚喪喜慶補助
+		  </div>
+		</div>
+		<div class="recruit-pill">
+		  <img src="./pic/tr/$4.png" alt="">
+		  <div class="rp-title">休假制度</div>
+		  <div class="rp-list">
+			年假12天起<br>
+			每年5天全薪病假<br>
+			每年特殊假<br>
+			年資假
+		  </div>
+		</div>
+      </div>
+      <div class="recruit-cta">
+        <a class="cta-button" href="https://www.104.com.tw/company/1a2x6bm2mj?jobsource=checkc" target="_blank">加入我們</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-container">
+      <div class="contact-card">
+        <h3>聯絡方式</h3>
+        <p><strong>地址：</strong>台北市內湖區南京東路六段372號</p>
+        <p><strong>服務時間：</strong>週一至週五 9:00–18:00</p>
+        <p><strong>Email：</strong><a href="mailto:HR@north.com.tw">HR@north.com.tw</a></p>
+      </div>
+      <div class="map-embed">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" 
+          src="https://www.google.com/maps?q=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%85%A7%E6%B9%96%E5%8D%80%E5%8D%97%E4%BA%AC%E6%9D%B1%E8%B7%AF%E5%85%AD%E6%AE%B5372%E8%99%9F&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© 2025 North co. 諾思資訊. All rights reserved.</p>
+    </div>
   </footer>
 
-  <!-- 遮幕（轉場） -->
-  <div id="veil" class="veil" aria-hidden="true"></div>
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="關閉">✕</button>
+    <button class="lb-prev" id="lbPrev" aria-label="上一張">❮</button>
+    <div class="lightbox-inner">
+      <img class="lightbox-img" id="lbImg" alt="放大圖片" />
+      <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
+    <button class="lb-next" id="lbNext" aria-label="下一張">❯</button>
+  </div>
 
-  <script src="./js/index.js"></script>
+  <div class="news-modal" id="newsModal">
+    <div class="news-modal__inner">
+      <button class="news-modal__close" id="newsClose" aria-label="關閉">✕</button>
+      <div class="news-modal__images" id="modalImages"></div>
+      <div class="news-modal__text" id="modalText"></div>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+  
+    // ===== [RWD 修復 1] 補上漢堡選單 JS =====
+    const navToggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const body = document.body; 
+
+    if (navToggle) {
+      navToggle.addEventListener('click', () => {
+        body.classList.toggle('nav-active'); 
+      });
+    }
+
+    if (mobileNav) {
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          body.classList.remove('nav-active');
+        });
+      });
+    }
+    // ===== 漢堡選單 JS 結束 =====
+  
+
+    const NEWS_JSON_URL = './js/north.json';
+
+    const heroCircleContent = document.getElementById('heroCircleContent');
+    if (heroCircleContent) {
+      const texts = ['創新，是我們的DNA','專業，是成長的基礎','真誠，是合作的起點','團隊，是家的延伸'];
+      let currentTextIndex = 0;
+      function rotateHeroText(){
+        heroCircleContent.classList.remove('active');
+        setTimeout(()=>{
+          currentTextIndex = (currentTextIndex + 1) % texts.length;
+          heroCircleContent.textContent = texts[currentTextIndex];
+          heroCircleContent.classList.add('active');
+        }, 500);
+      }
+      heroCircleContent.classList.add('active');
+      setInterval(rotateHeroText, 4000);
+    }
+
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          const c = entry.target.classList;
+          if(c.contains('fade-up'))   entry.target.style.animation='fadeInUp .8s ease forwards';
+          else if(c.contains('fade-left'))  entry.target.style.animation='fadeInLeft .8s ease forwards';
+          else if(c.contains('fade-right')) entry.target.style.animation='fadeInRight .8s ease forwards';
+          else if(c.contains('fade-in'))    entry.target.style.animation='fadeIn .8s ease forwards';
+        }
+      });
+    }, {threshold:.1, rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      // [RWD 修復 1] 排除手機選單連結的預設行為
+      if (!a.closest('.mobile-nav-links')) {
+        a.addEventListener('click', e=>{
+          const t = document.querySelector(a.getAttribute('href'));
+          if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+        });
+      }
+    });
+
+    // ====== News loader ======
+    let NEWS_ITEMS = [];
+    async function loadNews(){
+      try{
+        const res = await fetch(NEWS_JSON_URL, {cache:'no-store'});
+        if(!res.ok) throw new Error('載入失敗');
+        const data = await res.json();
+        NEWS_ITEMS = Array.isArray(data.items) ? data.items : [];
+        renderNewsGrid(NEWS_ITEMS);
+        initNewsSlider(); 
+      }catch(err){
+        console.error('讀取 north.json 失敗：', err);
+        const empty = document.getElementById('newsEmpty');
+        if (empty) empty.style.display='block';
+      }
+    }
+
+    function cardHTML(item){
+      const thumb = item.thumbnail || (item.images && item.images[0]) || '';
+      return `
+        <div class="news-item" data-id="${item.id}">
+          <div class="news-thumbnail" style="background-image:url('${thumb}')">
+            <div class="news-date">${item.date || ''}</div>
+          </div>
+          <div class="news-content">
+            <div class="news-category">${item.category || ''}</div>
+            <h3>${item.title || ''}</h3>
+            <p class="news-excerpt">${item.excerpt || ''}</p>
+            <span class="read-more">閱讀更多 →</span>
+          </div>
+        </div>`;
+    }
+
+    function renderNewsGrid(items){
+      const grid = document.getElementById('newsGrid');
+      if(!grid) return;
+      if(!items.length){
+        const empty = document.getElementById('newsEmpty');
+        if (empty) empty.style.display='block';
+        grid.innerHTML='';
+        return;
+      }
+      items.sort((a,b)=> new Date((b.date||'').replaceAll('/','-')) - new Date((a.date||'').replaceAll('/','-')));
+      grid.innerHTML = items.map(cardHTML).join('');
+      grid.querySelectorAll('.news-item').forEach(el=>{
+        el.addEventListener('click',()=> openNewsModal(el.getAttribute('data-id')));
+      });
+    }
+
+    const newsModal = document.getElementById('newsModal');
+    const newsClose = document.getElementById('newsClose');
+
+    function openNewsModal(id){
+      if(!newsModal) return;
+      const item = NEWS_ITEMS.find(n=> String(n.id) === String(id));
+      if(!item) return;
+      const modalText   = document.getElementById('modalText');
+      const modalImages = document.getElementById('modalImages');
+      modalText.innerHTML = `
+        <div class="category">${item.category||''}</div>
+        <div class="date">${item.date||''}</div>
+        <h2>${item.title||''}</h2>
+        ${item.contentHtml||''}`;
+      const imgs = Array.isArray(item.images)? item.images : [];
+      if(imgs.length){
+        modalImages.innerHTML =
+          imgs.map((src,i)=>`<img src="${src}" alt="快訊圖片 ${i+1}" class="modal-image ${i===0?'active':''}" id="modalImage-${i}">`).join('') +
+          (imgs.length>1? `<div class="image-nav">${imgs.map((_,i)=>`<button class="image-nav-btn ${i===0?'active':''}" data-index="${i}" aria-label="顯示圖片 ${i+1}"></button>`).join('')}</div>` : '');
+        
+        modalImages.querySelectorAll('.image-nav-btn').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            const idx = Number(btn.getAttribute('data-index'));
+            modalImages.querySelectorAll('.modal-image').forEach((im,i)=> im.classList.toggle('active', i===idx));
+            modalImages.querySelectorAll('.image-nav-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+          });
+        });
+
+        modalImages.querySelectorAll('.modal-image').forEach(img => {
+          img.addEventListener('click', () => {
+            openLightbox(img.src, item.title); 
+          });
+        });
+
+      }else{
+        modalImages.innerHTML = '';
+      }
+      newsModal.classList.add('active');
+      document.body.style.overflow='hidden';
+    }
+
+    function closeNewsModal(){
+      if(!newsModal) return;
+      newsModal.classList.remove('active');
+      document.body.style.overflow='auto';
+    }
+    if (newsClose) newsClose.addEventListener('click', closeNewsModal);
+    if (newsModal) newsModal.addEventListener('click', e=>{ if(e.target===newsModal) closeNewsModal(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNewsModal(); });
+
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    const lbClose = document.getElementById('lbClose');
+
+    function openLightbox(src, caption) {
+      if (!lightbox || !lbImg || !lbCaption) return;
+      lbImg.src = src;
+      lbCaption.textContent = caption;
+      lightbox.classList.add('active');
+      document.getElementById('lbPrev').style.display = 'none';
+      document.getElementById('lbNext').style.display = 'none';
+    }
+
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.classList.remove('active');
+      lbImg.src = ''; 
+      lbCaption.textContent = '';
+    }
+
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lightbox) lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+
+    let newsSliderIndex = 0;
+    let newsSliderItems = [];
+    let newsSliderGrid;
+    let newsSliderItemsPerPage = 3;
+    let newsSliderItemWidth = 0;
+    let newsSliderGap = 32; 
+
+    function initNewsSlider() {
+      newsSliderGrid = document.getElementById('newsGrid');
+      if (!newsSliderGrid) return;
+      newsSliderItems = newsSliderGrid.querySelectorAll('.news-item');
+      if (newsSliderItems.length === 0) {
+        document.getElementById('newsPrev').style.display = 'none';
+        document.getElementById('newsNext').style.display = 'none';
+        return;
+      }
+      const prevBtn = document.getElementById('newsPrev');
+      const nextBtn = document.getElementById('newsNext');
+      prevBtn.addEventListener('click', () => moveNewsSlider(-1));
+      nextBtn.addEventListener('click', () => moveNewsSlider(1));
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateNewsSliderLayout, 250);
+      });
+      updateNewsSliderLayout();
+    }
+
+    function updateNewsSliderLayout() {
+      if (newsSliderItems.length === 0) return;
+      const wrapper = document.getElementById('newsSliderWrapper');
+      if (!wrapper) return;
+      const wrapperWidth = wrapper.offsetWidth;
+
+      /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+      if (window.innerWidth <= 1024) {
+        newsSliderItemsPerPage = 1;
+        newsSliderItemWidth = wrapperWidth * 0.9;
+        newsSliderGap = wrapperWidth * 0.05;
+        newsSliderGrid.style.gap = '0';
+        newsSliderItems.forEach(item => {
+          item.style.width = `${newsSliderItemWidth}px`;
+          item.style.margin = `0 ${newsSliderGap}px`;
+        });
+        newsSliderGrid.style.paddingLeft = `${newsSliderGap}px`;
+      } else {
+        newsSliderItemsPerPage = 3;
+        newsSliderGap = 32;
+        newsSliderItemWidth = (wrapperWidth - (newsSliderGap * 2)) / 3;
+        newsSliderGrid.style.gap = `${newsSliderGap}px`;
+        newsSliderItems.forEach(item => {
+          item.style.width = `${newsSliderItemWidth}px`;
+          item.style.margin = '0';
+        });
+        newsSliderGrid.style.paddingLeft = '0';
+      }
+      newsSliderIndex = 0;
+      moveNewsSlider(0);
+    }
+
+    function moveNewsSlider(direction) {
+      if (!newsSliderGrid) return;
+      const totalItems = newsSliderItems.length;
+      if (totalItems <= newsSliderItemsPerPage) {
+        document.getElementById('newsPrev').style.display = 'none';
+        document.getElementById('newsNext').style.display = 'none';
+        return;
+      } else {
+        document.getElementById('newsPrev').style.display = 'block';
+        document.getElementById('newsNext').style.display = 'block';
+      }
+      newsSliderIndex += direction;
+      const maxIndex = totalItems - newsSliderItemsPerPage;
+      if (newsSliderIndex < 0) newsSliderIndex = 0;
+      if (newsSliderIndex > maxIndex) newsSliderIndex = maxIndex;
+      let moveAmount;
+      /* [RWD 修復 2] 中斷點從 768px 改為 1024px */
+      if (window.innerWidth <= 1024) {
+        moveAmount = newsSliderIndex * (newsSliderItemWidth + (newsSliderGap * 2));
+      } else {
+        moveAmount = newsSliderIndex * (newsSliderItemWidth + newsSliderGap);
+      }
+      newsSliderGrid.style.transform = `translateX(-${moveAmount}px)`;
+      document.getElementById('newsPrev').disabled = (newsSliderIndex === 0);
+      document.getElementById('newsNext').disabled = (newsSliderIndex === maxIndex);
+    }
+
+    function setupSeamlessMarquee(rowId, { reverse = false, gap = 32, speed = 60 } = {}) {
+      const track = document.getElementById(rowId);
+      if (!track) return;
+
+      const container = track.parentElement;
+      track.style.display = 'flex';
+      track.style.gap = gap + 'px';
+      track.style.willChange = 'transform';
+      track.style.whiteSpace = 'nowrap';
+      track.style.visibility = 'hidden'; 
+
+      const originals = Array.from(track.children);
+      if (originals.length === 0) return;
+
+      const measure = (els) => els.reduce((sum, el, i) => {
+        const rect = el.getBoundingClientRect();
+        return sum + rect.width + (i ? gap : 0);
+      }, 0);
+
+      const imgs = track.querySelectorAll('img');
+      const whenImagesReady = Promise.all(
+        Array.from(imgs).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(res => {
+            img.addEventListener('load', res, { once: true });
+            img.addEventListener('error', res, { once: true });
+          });
+        })
+      );
+
+      whenImagesReady.then(() => {
+        track.innerHTML = '';
+        const frag = document.createDocumentFragment();
+
+        originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+        originals.forEach(el => frag.appendChild(el));
+        originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+        
+        track.appendChild(frag);
+
+        const cycleEls = Array.from(track.children).slice(originals.length, originals.length * 2);
+        let cycleWidth = measure(cycleEls);
+
+        const needWidth = container.getBoundingClientRect().width * 1.2;
+        while (cycleWidth > 0 && cycleWidth < needWidth) {
+          originals.forEach(el => track.appendChild(el.cloneNode(true)));
+          originals.slice().reverse().forEach(el => track.insertBefore(el.cloneNode(true), track.firstChild));
+          
+          let newCycleWidth = measure(cycleEls);
+          if (newCycleWidth > cycleWidth) {
+              cycleWidth = newCycleWidth;
+          } else {
+              break; 
+          }
+        }
+
+        let pos = -cycleWidth;
+        let paused = false;
+        let rafId = null;
+
+        function tick() {
+          if (!paused) {
+            const delta = (speed / 60) * (reverse ? 1 : -1); 
+            pos += delta;
+            if (!reverse && pos <= -2 * cycleWidth) pos += cycleWidth;   
+            if ( reverse && pos >= 0)               pos -= cycleWidth;   
+            track.style.transform = `translateX(${pos}px)`;
+          }
+          rafId = requestAnimationFrame(tick);
+        }
+
+        track.addEventListener('mouseenter', () => paused = true);
+        track.addEventListener('mouseleave', () => paused = false);
+
+        track.style.visibility = 'visible';
+        tick();
+
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                cancelAnimationFrame(rafId);
+                setupSeamlessMarquee(rowId, { reverse, gap, speed }); 
+            }, 250); 
+        }, { passive: true });
+      });
+    }
+
+    setupSeamlessMarquee('row1', {reverse:false, gap:32, speed:55});
+    setupSeamlessMarquee('row2', {reverse:true, gap:32, speed:55});
+
+    const serviceCards = document.querySelectorAll('.flow-card');
+    const serviceObserver = new IntersectionObserver((entries,obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const idx = [...serviceCards].indexOf(entry.target);
+          setTimeout(()=> entry.target.classList.add('in'), idx*120);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold: .2});
+    serviceCards.forEach(card=> serviceObserver.observe(card));
+
+    loadNews(); 
+  
+  }); 
+</script>
+
 </body>
 </html>
