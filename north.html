@@ -7,8 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/flow.css" />
+  <link rel="stylesheet" href="./css/flow.css" /> 
   <meta name="description" content="North co. 諾思資訊 — 結合軟體開發與硬體整合、服務橫跨數位娛樂、系統整合、應用軟體與設備規劃的專業團隊。以深厚的技術力與國際合作經驗為基礎，我們持續打造具創新思維的產品與解決方案，協助客戶迎接數位轉型的挑戰。">
+  
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
 
@@ -35,7 +36,7 @@
     @keyframes shimmer{0%{left:-75%}100%{left:125%}}
 
     /* navbar */
-    .navbar{position:fixed;top:0;width:100%;background:rgba(246,247,249,.95);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;transition:all .3s ease}
+    .navbar{position:fixed;top:0;width:100%;background:rgba(246,247,249,1);backdrop-filter:blur(10px);z-index:1000;padding:1rem 0;transition:all .3s ease}
     .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}
     .logo{display:flex;align-items:center;gap:.7rem}
     .logo img{width:64px;border-radius: 12px; height:64px}
@@ -52,8 +53,72 @@
     .news-section{padding:5rem 0;background:#fff}
     .news-container{max-width:1200px;margin:0 auto;padding:0 2rem}
     .news-title{text-align:center;font-size:2.5rem;font-weight:700;color:#333;margin-bottom:3rem}
-    .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;margin-bottom:3rem}
-    .news-item{background:linear-gradient(135deg,#f6f7f9,#e8f4f8);border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.1);transition:all .3s ease;cursor:pointer}
+
+    /* [修改] 1. 新增輪播 (Slider) 相關樣式 */
+    .news-slider-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+    .news-slider-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+    .news-slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+      color: #333;
+      cursor: pointer;
+      z-index: 10;
+      transition: all .3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .news-slider-arrow:hover {
+      background: #82bdcc;
+      color: #fff;
+      border-color: #82bdcc;
+    }
+    .news-slider-arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .news-slider-arrow.prev {
+      left: -20px;
+    }
+    .news-slider-arrow.next {
+      right: -20px;
+    }
+    @media (max-width: 768px) {
+      .news-slider-arrow.prev { left: -10px; }
+      .news-slider-arrow.next { right: -10px; }
+    }
+    /* [修改] 2. 移除 .news-grid 的 grid 屬性，改為 flex 軌道 */
+    .news-grid{
+      display: flex;
+      transition: transform 0.5s ease;
+      /* 移除 grid-template-columns, gap, margin-bottom */
+    }
+    /* [修改] 3. 移除 .news-item 的 grid 屬性，寬度由 JS 控制 */
+    .news-item{
+      background:linear-gradient(135deg,#f6f7f9,#e8f4f8);
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+      transition:all .3s ease;
+      cursor:pointer;
+      flex-shrink: 0; /* 確保項目不被壓縮 */
+      box-sizing: border-box; /* 確保 padding/border 不影響寬度計算 */
+    }
+    /* [修改] 結束 */
+
     .news-item:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.15)}
     .news-thumbnail{width:100%;height:200px;background-size:cover;background-position:center;position:relative}
     .news-date{position:absolute;top:1rem;right:1rem;background:rgba(130,189,204,.9);color:#fff;padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:500}
@@ -65,7 +130,7 @@
     .read-more:hover{color:#6ba3b3}
     .news-empty{color:#888;text-align:center}
 
-    /* hero 調為 60% 高度 */
+    /* hero (原樣) */
     .hero{min-height:60vh;display:flex;align-items:center;padding:0 2rem;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);position:relative;overflow:hidden}
     .hero-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
     .hero-content h1{font-size:3.5rem;font-weight:800;color:#333;margin-bottom:1rem;line-height:1.2}
@@ -81,7 +146,7 @@
     .animate-on-scroll.fade-right{animation:fadeInRight .8s ease forwards}
     .animate-on-scroll.fade-in{animation:fadeIn .8s ease forwards}
 
-    /* services（加大間距＋文字可讀性提升＋首次上下交錯入場） */
+    /* services (原樣) */
     .services{padding:5rem 0;background:#fff}
     .services-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
     .services-content .kickers{color:#82bdcc;font-weight:700;letter-spacing:.2em;font-size:.9rem;margin-bottom:1rem}
@@ -92,34 +157,30 @@
 
     .flow__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem}
 	.flow {
-  padding: 5rem 0;
-  background: linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);
-}
+      padding: 5rem 0;
+      background: linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%);
+    }
     .flow-card{
-	opacity:0;
-	transform:translateY(var(--offset,40px));
-	transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s;
-	
+	  opacity:0;
+	  transform:translateY(var(--offset,40px));
+	  transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s;
 	}
 	.flow-card {
-  border: 1px solid transparent;     /* 邊框透明，避免黑線 */
-  border-radius: 18px;               /* 圓角，柔化邊緣 */
-  overflow: hidden;                  /* 讓圖片跟著卡片圓角裁切 */
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* 柔和陰影，取代黑邊 */
-  background: rgba(255,255,255,0.02);      /* 極淡背景，避免邊緣空白 */
-}
-.flow-card__media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* 確保圖片填滿 */
-}
-
-	
+      border: 1px solid transparent;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+    .flow-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     .flow-card.in{opacity:1;transform:translateY(0)}
     .flow-card:nth-child(odd){--offset:48px}
     .flow-card:nth-child(even){--offset:-48px}
-
     .flow-card__overlay{
       position:absolute;inset:0;display:flex;align-items:flex-end;
       background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
@@ -135,7 +196,7 @@
       text-shadow:0 3px 14px rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.75);
     }
 
-    /* company photos - 無縫跑馬燈（JS 控制，無 CSS animation） */
+    /* company photos (原樣) */
     .company-photos{padding:5rem 0;background:#fff;overflow:hidden}
     .photos-container{max-width:1200px;margin:0 auto;text-align:center;padding:0 2rem}
     .photos-container h2{font-size:2.5rem;font-weight:700;color:#333;margin-bottom:1.5rem}
@@ -147,9 +208,9 @@
     .photo-caption{position:absolute;left:0;right:0;bottom:0;padding:.8rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.95rem;opacity:0;transform:translateY(10px);transition:all .25s ease}
     .photo-item:hover .photo-caption{opacity:1;transform:translateY(0)}
 
-    .see-more-wrap{margin-top:1rem;text-align:center;   /* 讓子元素文字置中 */}
+    .see-more-wrap{margin-top:1rem;text-align:center;}
 
-    /* lightbox */
+    /* lightbox (原樣) */
     .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
     .lightbox.active{display:flex}
     .lightbox-inner{max-width:min(95vw,1200px);max-height:90vh;position:relative}
@@ -171,12 +232,12 @@
     .philosophy-item h3{font-size:1.3rem;font-weight:600;color:#82bdcc;margin-bottom:1rem}
     .philosophy-item p{color:#666;line-height:1.6}
 
+    /* recruit (原樣) */
     #recruit{padding:5rem 0;background:linear-gradient(135deg,#f6f7f9 0%,#e8f4f8 100%)}
     .recruit-container{max-width:1200px;margin:0 auto;padding:0 2rem}
     .recruit-title{font-size:2.2rem;font-weight:800;margin-bottom:1rem;color:#333;text-align:center}
     .recruit-sub{color:#666;text-align:center;margin-bottom:1.5rem}
     .recruit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
-    .recruit-pill{background:#fff;border:1px solid #e6eef2;border-radius:999px;padding:.75rem 1rem;text-align:center}
     .recruit-cta{text-align:center;margin-top:1.5rem}
 
     #contact{padding:5rem 0;background:#fff}
@@ -189,76 +250,58 @@
     .footer{background:#333;color:#fff;padding:3rem 0;text-align:center}
     .footer-container{max-width:1200px;margin:0 auto;padding:0 2rem}
 
+    /* RWD (原樣) */
     @media(max-width:1200px){.flow__grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:768px){
       .hero-container{grid-template-columns:1fr;text-align:center}
       .hero-content h1{font-size:2.5rem}
       .hero-circle{width:250px;height:250px}
       .services-container{grid-template-columns:1fr;gap:2rem}
-      .nav-links{display:none}
+      .nav-links{display:none} /* 這是你原始的 RWD 規則，保持不動 */
       .flow__grid{grid-template-columns:1fr;gap:2rem}
     }
 	
-	
-		/* 卡片外框 */
+	/* 卡片外框 (原樣) */
 	.recruit-pill{
 	  display:flex;
 	  flex-direction:column;
 	  align-items:center;
 	  text-align:center;
-
 	  padding:18px 20px;
 	  background:#fff;
-	  border:1px solid #e6e9ef;        /* 細邊 */
-	  border-radius:25px;               /* 圓角 */
-	  overflow: hidden;      /* 圖或背景不會超出圓角 */
-	  
-	  box-shadow:0 4px 16px rgba(0,0,0,.06); /* 淡陰影 */
-	  color:#374151;                    /* 內文字色 */
-	  line-height:1.85;                 /* 行高像圖1一樣鬆 */
-	  
+	  border:1px solid #e6e9ef;
+	  border-radius:25px;
+	  overflow: hidden;
+	  box-shadow:0 4px 16px rgba(0,0,0,.06);
+	  color:#374151;
+	  line-height:1.85;
 	}
-
-	/* 上方圖示 */
 	.recruit-pill > img{
-	  width:64px;                       /* 圖大小 */
+	  width:64px;
 	  height:64px;
 	  margin-bottom: -6px;   
 	  object-fit:contain;
 	  display:block;
 	}
-
-	/* 標題（第一行字） */
 	.recruit-pill .rp-title{
 	  font-weight:900;
-
 	  font-size:18px;
 	  color:#111827;
 	  margin: 2px 0 6px;  
 	}
-
-	/* 內文（條列） */
 	.recruit-pill .rp-list{
 	  font-size:14px;
 	  color:#4b5563;
-	  margin-top: 0;                /* 靠上 */
+	  margin-top: 0;
 	  line-height: 1.7;  
 	}
 
-	
-    
-    
-  
-  
-  
-  
-    
   /* ===== News Modal (快訊彈窗) ===== */
   .news-modal{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,.85);
-    z-index:1900; /* 數字比 navbar 高即可 */
+    z-index:1900;
     display:none;
     align-items:center;
     justify-content:center;
@@ -267,40 +310,37 @@
   }
   .news-modal.active{
     display:flex;
-    animation: fadeIn .3s ease; /* 沿用您原有的 fadeIn 動畫 */
+    animation: fadeIn .3s ease;
   }
   .news-modal__inner{
     position:relative;
     background:#fff;
     border-radius:12px;
-    max-width:800px; /* 彈窗最大寬度 */
+    /* [修改] 彈窗放大 (800px -> 960px) */
+    max-width:960px; 
     width:100%;
-    max-height:85vh; /* 彈窗最大高度 */
+    max-height:85vh;
     overflow-y:auto;
     display:grid;
-    grid-template-columns:1fr; /* 手機上：單欄 (圖片在上) */
+    grid-template-columns:1fr;
     gap:1.5rem;
     padding:2rem;
     box-sizing: border-box;
   }
 
-  /* 桌機：雙欄 (圖片在左，文字在右) */
   @media(min-width: 768px){
     .news-modal__inner{
-      /* 1fr 1fr = 兩欄等寬 */
-      grid-template-columns: 1fr 1fr; 
+      /* [修改] 圖片與文字比例 (1:1 -> 4:5) */
+      grid-template-columns: 4fr 5fr; 
+      gap: 2rem; /* 加大間距 */
       padding:2.5rem;
     }
-    
-    /* 關鍵：讓文字區塊(modalText)永遠在第二欄 */
     .news-modal__images:not(:empty) + .news-modal__text{
-        grid-row: 1; /* 確保文字在第一行 */
+        grid-row: 1; 
     }
     .news-modal__images:not(:empty){
-        grid-row: 1; /* 確保圖片在第一行 */
+        grid-row: 1; 
     }
-    
-    /* 如果圖片區是空的，讓文字區塊佔滿兩欄 */
     .news-modal__images:empty + .news-modal__text{
         grid-column: 1 / -1;
     }
@@ -330,9 +370,8 @@
     color:#000;
   }
 
-  /* --- 彈窗內的文字樣式 --- */
   .news-modal__text .category{
-    color:#82bdcc; /* 沿用主題色 */
+    color:#82bdcc; 
     font-weight:600;
     margin-bottom:.25rem;
   }
@@ -362,40 +401,48 @@
     margin-bottom: 0.5rem;
   }
 
-  /* --- 彈窗內的圖片樣式 --- */
   .news-modal__images .modal-image{
     width:100%;
     height:auto;
     border-radius:8px;
-    display:none; /* 預設隱藏 */
+    display:none;
     margin-bottom:.75rem;
     border:1px solid #eee;
+    /* [修改] 新增點圖放大游標 */
+    cursor: zoom-in;
   }
   .news-modal__images .modal-image.active{
-    display:block; /* 只有 active 的才顯示 */
+    display:block; 
   }
+  
+  /* [修改] 彈窗圖片導覽 - 圓點樣式 */
   .image-nav{
     display:flex;
     flex-wrap:wrap;
-    gap:.5rem;
-    margin-top: .5rem;
+    justify-content: center; /* 置中 */
+    gap: .75rem; /* 圓點間距 */
+    margin-top: 1rem; /* 與圖片的間距 */
   }
   .image-nav-btn{
-    background:#f4f4f4;
-    border:1px solid #ddd;
-    border-radius:4px;
-    padding:.3rem .6rem;
-    font-size:.85rem;
-    cursor:pointer;
+    /* 移除舊有按鈕樣式 */
+    background: #ccc; /* 預設顏色 */
+    border: none;
+    border-radius: 50%; /* 變圓形 */
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    font-size: 0; /* 隱藏文字 */
+    color: transparent;
+    cursor: pointer;
     transition: all .2s ease;
   }
   .image-nav-btn.active,
   .image-nav-btn:hover{
-    background:#82bdcc;
-    color:#fff;
-    border-color:#82bdcc;
+    background: #82bdcc; /* 主題色 */
+    border-color: #82bdcc;
+    transform: scale(1.2); /* 選中或懸停時放大 */
   }
-  /* [新增] 諾思快訊 Modal 彈窗 CSS 樣式 結束 */
+  /* [修改] 結束 */
   
   </style>
 </head>
@@ -494,7 +541,15 @@
   <section class="news-section" id="news-section">
     <div class="news-container">
       <h2 class="news-title animate-on-scroll fade-up">諾思快訊</h2>
-      <div class="news-grid" id="newsGrid"></div>
+      
+      <div class="news-slider-container">
+        <button class="news-slider-arrow prev" id="newsPrev" aria-label="上一頁">❮</button>
+        <div class="news-slider-wrapper" id="newsSliderWrapper">
+          <div class="news-grid" id="newsGrid">
+            </div>
+        </div>
+        <button class="news-slider-arrow next" id="newsNext" aria-label="下一頁">❯</button>
+      </div>
       <div class="news-empty" id="newsEmpty" style="display:none">（目前沒有可顯示的快訊）</div>
     </div>
   </section>
@@ -527,16 +582,13 @@
           <img src="./pic/env05.jpg" alt="健身房" />
           <div class="photo-caption"><strong>健身房</strong>｜五臟俱全的運動器械</div>
         </div>
-
       </div>
 
       <div class="photo-slider" id="row2">
-	  
         <div class="photo-item" data-title="辦公區域" data-desc="寬敞的辦公空間，提供升降座、人體工學椅">
           <img src="./pic/env06.jpg" alt="辦公區域" />
           <div class="photo-caption"><strong>辦公區域</strong>｜寬敞空間、升降座、人體工學椅</div>
         </div>	  
-	  
         <div class="photo-item" data-title="按摩椅室" data-desc="溫馨放鬆的個人空間">
           <img src="./pic/env07.jpg" alt="按摩椅室" />
           <div class="photo-caption"><strong>按摩椅室</strong>溫馨放鬆的個人空間</div>
@@ -554,10 +606,6 @@
           <div class="photo-caption"><strong>甜點櫃</strong>｜糖份補給站</div>
         </div>
       </div>
-
-
-
-
       </div>
 
       <div class="see-more-wrap">
@@ -572,7 +620,7 @@
       <p class="recruit-sub">我們相信的價值<br>專業・熱誠・國際視野・永續發展<br>持續向世界學習，也持續為世界創造價值。</p>
       <div class="recruit-grid">
 		<div class="recruit-pill">
-		  <img src="./pic/$3.png" alt="">
+		  <img src="./pic/tr/$3.png" alt="">
 		  <div class="rp-title">個人成長</div>
 		  <div class="rp-list">
 			年薪保障<br>
@@ -581,9 +629,8 @@
 			升遷機會
 		  </div>
 		</div>
-		
 		<div class="recruit-pill">
-		  <img src="./pic/$2.png" alt="">
+		  <img src="./pic/tr/$2.png" alt="">
 		  <div class="rp-title">員工關懷</div>
 		  <div class="rp-list">
 			團體保險<br>
@@ -592,9 +639,8 @@
 			健康講座
 		  </div>
 		</div>
-
 		<div class="recruit-pill">
-		  <img src="./pic/$.png" alt="">
+		  <img src="./pic/tr/$.png" alt="">
 		  <div class="rp-title">獎金福利</div>
 		  <div class="rp-list">
 			三節禮金<br>
@@ -603,9 +649,8 @@
 			婚喪喜慶補助
 		  </div>
 		</div>
-
 		<div class="recruit-pill">
-		  <img src="./pic/$4.png" alt="">
+		  <img src="./pic/tr/$4.png" alt="">
 		  <div class="rp-title">休假制度</div>
 		  <div class="rp-list">
 			年假12天起<br>
@@ -652,272 +697,390 @@
     <button class="lb-next" id="lbNext" aria-label="下一張">❯</button>
   </div>
 
-
   <div class="news-modal" id="newsModal">
     <div class="news-modal__inner">
       <button class="news-modal__close" id="newsClose" aria-label="關閉">✕</button>
-      
       <div class="news-modal__images" id="modalImages"></div>
-      
       <div class="news-modal__text" id="modalText"></div>
     </div>
   </div>
+
   <script>
-  const NEWS_JSON_URL = './north.json';
+  // [修改] 1. 將所有 JS 邏輯包裹在 DOMContentLoaded 中，確保 HTML 元素都已載入
+  document.addEventListener('DOMContentLoaded', () => {
+  
+    const NEWS_JSON_URL = './js/north.json';
 
-  const heroCircleContent = document.getElementById('heroCircleContent');
-  if (heroCircleContent) {
-    const texts = ['創新，是我們的DNA','專業，是成長的基礎','真誠，是合作的起點','團隊，是家的延伸'];
-    let currentTextIndex = 0;
-    function rotateHeroText(){
-      heroCircleContent.classList.remove('active');
-      setTimeout(()=>{
-        currentTextIndex = (currentTextIndex + 1) % texts.length;
-        heroCircleContent.textContent = texts[currentTextIndex];
-        heroCircleContent.classList.add('active');
-      }, 500);
-    }
-    heroCircleContent.classList.add('active');
-    setInterval(rotateHeroText, 4000);
-  }
-
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('visible');
-        const c = entry.target.classList;
-        if(c.contains('fade-up'))   entry.target.style.animation='fadeInUp .8s ease forwards';
-        else if(c.contains('fade-left'))  entry.target.style.animation='fadeInLeft .8s ease forwards';
-        else if(c.contains('fade-right')) entry.target.style.animation='fadeInRight .8s ease forwards';
-        else if(c.contains('fade-in'))    entry.target.style.animation='fadeIn .8s ease forwards';
+    const heroCircleContent = document.getElementById('heroCircleContent');
+    if (heroCircleContent) {
+      const texts = ['創新，是我們的DNA','專業，是成長的基礎','真誠，是合作的起點','團隊，是家的延伸'];
+      let currentTextIndex = 0;
+      function rotateHeroText(){
+        heroCircleContent.classList.remove('active');
+        setTimeout(()=>{
+          currentTextIndex = (currentTextIndex + 1) % texts.length;
+          heroCircleContent.textContent = texts[currentTextIndex];
+          heroCircleContent.classList.add('active');
+        }, 500);
       }
-    });
-  }, {threshold:.1, rootMargin:'0px 0px -50px 0px'});
-  document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
-
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
-    });
-  });
-
-  // ====== News loader ======
-  let NEWS_ITEMS = [];
-  async function loadNews(){
-    try{
-      const res = await fetch(NEWS_JSON_URL, {cache:'no-store'});
-      if(!res.ok) throw new Error('載入失敗');
-      const data = await res.json();
-      NEWS_ITEMS = Array.isArray(data.items) ? data.items : [];
-      renderNewsGrid(NEWS_ITEMS);
-    }catch(err){
-      console.error('讀取 news.json 失敗：', err);
-      const empty = document.getElementById('newsEmpty');
-      if (empty) empty.style.display='block';
+      heroCircleContent.classList.add('active');
+      setInterval(rotateHeroText, 4000);
     }
-  }
 
-  function cardHTML(item){
-    const thumb = item.thumbnail || (item.images && item.images[0]) || '';
-    return `
-      <div class="news-item" data-id="${item.id}">
-        <div class="news-thumbnail" style="background-image:url('${thumb}')">
-          <div class="news-date">${item.date || ''}</div>
-        </div>
-        <div class="news-content">
-          <div class="news-category">${item.category || ''}</div>
-          <h3>${item.title || ''}</h3>
-          <p class="news-excerpt">${item.excerpt || ''}</p>
-          <span class="read-more">閱讀更多 →</span>
-        </div>
-      </div>`;
-  }
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          const c = entry.target.classList;
+          if(c.contains('fade-up'))   entry.target.style.animation='fadeInUp .8s ease forwards';
+          else if(c.contains('fade-left'))  entry.target.style.animation='fadeInLeft .8s ease forwards';
+          else if(c.contains('fade-right')) entry.target.style.animation='fadeInRight .8s ease forwards';
+          else if(c.contains('fade-in'))    entry.target.style.animation='fadeIn .8s ease forwards';
+        }
+      });
+    }, {threshold:.1, rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
 
-  function renderNewsGrid(items){
-    const grid = document.getElementById('newsGrid');
-    if(!grid) return;
-    if(!items.length){
-      const empty = document.getElementById('newsEmpty');
-      if (empty) empty.style.display='block';
-      grid.innerHTML='';
-      return;
-    }
-    items.sort((a,b)=> new Date((b.date||'').replaceAll('/','-')) - new Date((a.date||'').replaceAll('/','-')));
-    grid.innerHTML = items.map(cardHTML).join('');
-    grid.querySelectorAll('.news-item').forEach(el=>{
-      el.addEventListener('click',()=> openNewsModal(el.getAttribute('data-id')));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
     });
-  }
 
-  const newsModal = document.getElementById('newsModal');
-  const newsClose = document.getElementById('newsClose');
+    // ====== News loader ======
+    let NEWS_ITEMS = [];
+    async function loadNews(){
+      try{
+        const res = await fetch(NEWS_JSON_URL, {cache:'no-store'});
+        if(!res.ok) throw new Error('載入失敗');
+        const data = await res.json();
+        NEWS_ITEMS = Array.isArray(data.items) ? data.items : [];
+        renderNewsGrid(NEWS_ITEMS);
+        
+        // [修改] 2. 渲染新聞後，初始化輪播
+        initNewsSlider(); 
 
-  function openNewsModal(id){
-    if(!newsModal) return;
-    const item = NEWS_ITEMS.find(n=> String(n.id) === String(id));
-    if(!item) return;
-    const modalText   = document.getElementById('modalText');
-    const modalImages = document.getElementById('modalImages');
-    modalText.innerHTML = `
-      <div class="category">${item.category||''}</div>
-      <div class="date">${item.date||''}</div>
-      <h2>${item.title||''}</h2>
-      ${item.contentHtml||''}`;
-    const imgs = Array.isArray(item.images)? item.images : [];
-    if(imgs.length){
-      modalImages.innerHTML =
-        imgs.map((src,i)=>`<img src="${src}" alt="快訊圖片 ${i+1}" class="modal-image ${i===0?'active':''}" id="modalImage-${i}">`).join('') +
-        (imgs.length>1? `<div class="image-nav">${imgs.map((_,i)=>`<button class="image-nav-btn ${i===0?'active':''}" data-index="${i}">圖片 ${i+1}</button>`).join('')}</div>` : '');
-      modalImages.querySelectorAll('.image-nav-btn').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const idx = Number(btn.getAttribute('data-index'));
-          modalImages.querySelectorAll('.modal-image').forEach((im,i)=> im.classList.toggle('active', i===idx));
-          modalImages.querySelectorAll('.image-nav-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+      }catch(err){
+        console.error('讀取 north.json 失敗：', err);
+        const empty = document.getElementById('newsEmpty');
+        if (empty) empty.style.display='block';
+      }
+    }
+
+    function cardHTML(item){
+      const thumb = item.thumbnail || (item.images && item.images[0]) || '';
+      return `
+        <div class="news-item" data-id="${item.id}">
+          <div class="news-thumbnail" style="background-image:url('${thumb}')">
+            <div class="news-date">${item.date || ''}</div>
+          </div>
+          <div class="news-content">
+            <div class="news-category">${item.category || ''}</div>
+            <h3>${item.title || ''}</h3>
+            <p class="news-excerpt">${item.excerpt || ''}</p>
+            <span class="read-more">閱讀更多 →</span>
+          </div>
+        </div>`;
+    }
+
+    function renderNewsGrid(items){
+      const grid = document.getElementById('newsGrid');
+      if(!grid) return;
+      if(!items.length){
+        const empty = document.getElementById('newsEmpty');
+        if (empty) empty.style.display='block';
+        grid.innerHTML='';
+        return;
+      }
+      items.sort((a,b)=> new Date((b.date||'').replaceAll('/','-')) - new Date((a.date||'').replaceAll('/','-')));
+      grid.innerHTML = items.map(cardHTML).join('');
+      grid.querySelectorAll('.news-item').forEach(el=>{
+        el.addEventListener('click',()=> openNewsModal(el.getAttribute('data-id')));
+      });
+    }
+
+    const newsModal = document.getElementById('newsModal');
+    const newsClose = document.getElementById('newsClose');
+
+    function openNewsModal(id){
+      if(!newsModal) return;
+      const item = NEWS_ITEMS.find(n=> String(n.id) === String(id));
+      if(!item) return;
+      const modalText   = document.getElementById('modalText');
+      const modalImages = document.getElementById('modalImages');
+      modalText.innerHTML = `
+        <div class="category">${item.category||''}</div>
+        <div class="date">${item.date||''}</div>
+        <h2>${item.title||''}</h2>
+        ${item.contentHtml||''}`;
+      const imgs = Array.isArray(item.images)? item.images : [];
+      if(imgs.length){
+        modalImages.innerHTML =
+          imgs.map((src,i)=>`<img src="${src}" alt="快訊圖片 ${i+1}" class="modal-image ${i===0?'active':''}" id="modalImage-${i}">`).join('') +
+          // [修改] 3. 彈窗按鈕改為圓點 (移除 "圖片 ${i+1}" 文字)
+          (imgs.length>1? `<div class="image-nav">${imgs.map((_,i)=>`<button class="image-nav-btn ${i===0?'active':''}" data-index="${i}" aria-label="顯示圖片 ${i+1}"></button>`).join('')}</div>` : '');
+        
+        // 彈窗圓點按鈕的點擊事件
+        modalImages.querySelectorAll('.image-nav-btn').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            const idx = Number(btn.getAttribute('data-index'));
+            modalImages.querySelectorAll('.modal-image').forEach((im,i)=> im.classList.toggle('active', i===idx));
+            modalImages.querySelectorAll('.image-nav-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+          });
         });
-      });
-    }else{
-      modalImages.innerHTML = '';
-    }
-    newsModal.classList.add('active');
-    document.body.style.overflow='hidden';
-  }
 
-  function closeNewsModal(){
-    if(!newsModal) return;
-    newsModal.classList.remove('active');
-    document.body.style.overflow='auto';
-  }
-  if (newsClose) newsClose.addEventListener('click', closeNewsModal);
-  if (newsModal) newsModal.addEventListener('click', e=>{ if(e.target===newsModal) closeNewsModal(); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNewsModal(); });
+        // [修改] 4. (新功能) 幫彈窗內的圖片加上點擊放大
+        modalImages.querySelectorAll('.modal-image').forEach(img => {
+          img.addEventListener('click', () => {
+            // 呼叫下方新增的 openLightbox 功能
+            openLightbox(img.src, item.title); 
+          });
+        });
 
-      // ====== 無縫跑馬燈（滿版、自動複製、尾接頭、無閃爍） ======
-// 無縫跑馬燈（滿版、無留白、無閃爍、可暫停）
-function setupSeamlessMarquee(rowId, { reverse = false, gap = 32, speed = 60 } = {}) {
-  const track = document.getElementById(rowId);
-  if (!track) return;
-
-  const container = track.parentElement;         // 外層：需 overflow:hidden
-  track.style.display = 'flex';
-  track.style.gap = gap + 'px';
-  track.style.willChange = 'transform';
-  track.style.whiteSpace = 'nowrap';
-  track.style.visibility = 'hidden';             // 建構完成前避免初始留白閃一下
-
-  const originals = Array.from(track.children);
-
-  // 幫助量測：回傳指定元素陣列的「內容寬度 + gap」總和
-  const measure = (els) => els.reduce((sum, el, i) => {
-    const rect = el.getBoundingClientRect();
-    return sum + rect.width + (i ? gap : 0);
-  }, 0);
-
-  // 等圖片載入完成再開始（避免量測錯誤）
-  const imgs = track.querySelectorAll('img');
-  const whenImagesReady = Promise.all(
-    Array.from(imgs).map(img => {
-      if (img.complete) return Promise.resolve();
-      return new Promise(res => {
-        img.addEventListener('load', res, { once: true });
-        img.addEventListener('error', res, { once: true });
-      });
-    })
-  );
-
-  whenImagesReady.then(() => {
-    // 先清空，建立： [前一輪][當前輪][下一輪] 3 倍內容
-    track.innerHTML = '';
-    const frag = document.createDocumentFragment();
-
-    // 前一輪
-    originals.forEach(el => frag.appendChild(el.cloneNode(true)));
-    // 當前輪（用原件，節省記憶體）
-    originals.forEach(el => frag.appendChild(el));
-    // 下一輪
-    originals.forEach(el => frag.appendChild(el.cloneNode(true)));
-
-    track.appendChild(frag);
-
-    // 量測一個循環的寬度
-    const cycleEls = Array.from(track.children).slice(originals.length, originals.length * 2);
-    let cycleWidth = measure(cycleEls);
-
-    // 若一輪寬度還不足以覆蓋視窗，繼續「成對」往兩側補
-    const needWidth = container.getBoundingClientRect().width * 1.2; // 稍微超過，保險
-    while (cycleWidth < needWidth) {
-      // 往右補一輪、往左補一輪
-      originals.forEach(el => track.appendChild(el.cloneNode(true)));
-      originals.slice().reverse().forEach(el => track.insertBefore(el.cloneNode(true), track.firstChild));
-      // 重新量測單輪寬度（原樣本仍為 originals 的平均，單輪寬度不變）
-      if (measure(cycleEls) > 0) cycleWidth = measure(cycleEls);
-      else break; // 以防萬一
-    }
-
-    // 起始定位：讓畫面落在「中間那一輪」的左邊界（這樣兩側都已滿）
-    let pos = -cycleWidth;
-
-    // 動畫：位移到 ±(2 * cycleWidth) 邊界時，用數學回捲，畫面不會跳
-    let paused = false;
-    function tick() {
-      if (!paused) {
-        const delta = (speed / 60) * (reverse ? 1 : -1); // 假設 60fps
-        pos += delta;
-
-        if (!reverse && pos <= -2 * cycleWidth) pos += cycleWidth;   // 左移過頭 → 往右回捲一輪
-        if ( reverse && pos >= 0)               pos -= cycleWidth;   // 右移過頭 → 往左回捲一輪
-
-        track.style.transform = `translateX(${pos}px)`;
+      }else{
+        modalImages.innerHTML = '';
       }
-      requestAnimationFrame(tick);
+      newsModal.classList.add('active');
+      document.body.style.overflow='hidden';
     }
 
-    // 懸停暫停
-    track.addEventListener('mouseenter', () => paused = true);
-    track.addEventListener('mouseleave', () => paused = false);
+    function closeNewsModal(){
+      if(!newsModal) return;
+      newsModal.classList.remove('active');
+      document.body.style.overflow='auto';
+    }
+    if (newsClose) newsClose.addEventListener('click', closeNewsModal);
+    if (newsModal) newsModal.addEventListener('click', e=>{ if(e.target===newsModal) closeNewsModal(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNewsModal(); });
 
-    // 顯示並開始
-    track.style.visibility = 'visible';
-    requestAnimationFrame(tick);
+    // [修改] 5. (新功能) Lightbox 燈箱的 JS 邏輯
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    const lbClose = document.getElementById('lbClose');
 
-    // 監聽 resize：重新建構，確保 RWD 下也不留白
-    let rid = null;
-    window.addEventListener('resize', () => {
-      cancelAnimationFrame(rid);
-      rid = requestAnimationFrame(() => {
-        // 重新初始化（簡單作法：遞迴重設）
-        setupSeamlessMarquee(rowId, { reverse, gap, speed });
-      });
-    }, { passive: true, once: true }); // 只做一次重建，避免頻繁
-  });
-}
+    function openLightbox(src, caption) {
+      if (!lightbox || !lbImg || !lbCaption) return;
+      lbImg.src = src;
+      lbCaption.textContent = caption;
+      lightbox.classList.add('active');
+      // (暫不處理左右切換，因為彈窗內圖片是獨立的)
+      document.getElementById('lbPrev').style.display = 'none';
+      document.getElementById('lbNext').style.display = 'none';
+    }
+
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.classList.remove('active');
+      lbImg.src = ''; // 清空
+      lbCaption.textContent = '';
+    }
+
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lightbox) lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    // [修改] Lightbox 邏輯結束
 
 
+    // [修改] 6. (新功能) 諾思快訊輪播 (News Slider) 邏輯
+    let newsSliderIndex = 0;
+    let newsSliderItems = [];
+    let newsSliderGrid;
+    let newsSliderItemsPerPage = 3;
+    let newsSliderItemWidth = 0;
+    let newsSliderGap = 32; // 2rem
 
-
-
-
-
-  // 第一排：正向，從最後 3 張起頭（例：8 張 => 顯示 6,7,8,1,2...）
-  setupSeamlessMarquee('row1', {reverse:false, gap:32, speed:55, startOffsetItems:3});
-  // 第二排：反向同理
-  setupSeamlessMarquee('row2', {reverse:true, gap:32, speed:55, startOffsetItems:3});
-
-  // ====== Services：進場交錯動畫（首次進 viewport 執行） ======
-  const serviceCards = document.querySelectorAll('.flow-card');
-  const serviceObserver = new IntersectionObserver((entries,obs)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const idx = [...serviceCards].indexOf(entry.target);
-        setTimeout(()=> entry.target.classList.add('in'), idx*120);
-        obs.unobserve(entry.target);
+    function initNewsSlider() {
+      newsSliderGrid = document.getElementById('newsGrid');
+      if (!newsSliderGrid) return;
+      newsSliderItems = newsSliderGrid.querySelectorAll('.news-item');
+      if (newsSliderItems.length === 0) {
+        document.getElementById('newsPrev').style.display = 'none';
+        document.getElementById('newsNext').style.display = 'none';
+        return;
       }
-    });
-  }, {threshold: .2});
-  serviceCards.forEach(card=> serviceObserver.observe(card));
+      const prevBtn = document.getElementById('newsPrev');
+      const nextBtn = document.getElementById('newsNext');
+      prevBtn.addEventListener('click', () => moveNewsSlider(-1));
+      nextBtn.addEventListener('click', () => moveNewsSlider(1));
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateNewsSliderLayout, 250);
+      });
+      updateNewsSliderLayout();
+    }
 
-  // 初始化快訊
-  document.addEventListener('DOMContentLoaded', loadNews);
+    function updateNewsSliderLayout() {
+      if (newsSliderItems.length === 0) return;
+      const wrapper = document.getElementById('newsSliderWrapper');
+      if (!wrapper) return;
+      const wrapperWidth = wrapper.offsetWidth;
+      if (window.innerWidth <= 768) {
+        newsSliderItemsPerPage = 1;
+        newsSliderItemWidth = wrapperWidth * 0.9;
+        newsSliderGap = wrapperWidth * 0.05;
+        newsSliderGrid.style.gap = '0';
+        newsSliderItems.forEach(item => {
+          item.style.width = `${newsSliderItemWidth}px`;
+          item.style.margin = `0 ${newsSliderGap}px`;
+        });
+        newsSliderGrid.style.paddingLeft = `${newsSliderGap}px`;
+      } else {
+        newsSliderItemsPerPage = 3;
+        newsSliderGap = 32;
+        newsSliderItemWidth = (wrapperWidth - (newsSliderGap * 2)) / 3;
+        newsSliderGrid.style.gap = `${newsSliderGap}px`;
+        newsSliderItems.forEach(item => {
+          item.style.width = `${newsSliderItemWidth}px`;
+          item.style.margin = '0';
+        });
+        newsSliderGrid.style.paddingLeft = '0';
+      }
+      newsSliderIndex = 0;
+      moveNewsSlider(0);
+    }
+
+    function moveNewsSlider(direction) {
+      if (!newsSliderGrid) return;
+      const totalItems = newsSliderItems.length;
+      if (totalItems <= newsSliderItemsPerPage) {
+        document.getElementById('newsPrev').style.display = 'none';
+        document.getElementById('newsNext').style.display = 'none';
+        return;
+      } else {
+        document.getElementById('newsPrev').style.display = 'block';
+        document.getElementById('newsNext').style.display = 'block';
+      }
+      newsSliderIndex += direction;
+      const maxIndex = totalItems - newsSliderItemsPerPage;
+      if (newsSliderIndex < 0) newsSliderIndex = 0;
+      if (newsSliderIndex > maxIndex) newsSliderIndex = maxIndex;
+      let moveAmount;
+      if (window.innerWidth <= 768) {
+        moveAmount = newsSliderIndex * (newsSliderItemWidth + (newsSliderGap * 2));
+      } else {
+        moveAmount = newsSliderIndex * (newsSliderItemWidth + newsSliderGap);
+      }
+      newsSliderGrid.style.transform = `translateX(-${moveAmount}px)`;
+      document.getElementById('newsPrev').disabled = (newsSliderIndex === 0);
+      document.getElementById('newsNext').disabled = (newsSliderIndex === maxIndex);
+    }
+    // [修改] 輪播邏輯結束
+
+
+    // [修改] 7. (Bug 修復) 替換成 RWD 也能正常運作的跑馬燈邏輯
+    function setupSeamlessMarquee(rowId, { reverse = false, gap = 32, speed = 60 } = {}) {
+      const track = document.getElementById(rowId);
+      if (!track) return;
+
+      const container = track.parentElement;
+      track.style.display = 'flex';
+      track.style.gap = gap + 'px';
+      track.style.willChange = 'transform';
+      track.style.whiteSpace = 'nowrap';
+      track.style.visibility = 'hidden'; 
+
+      const originals = Array.from(track.children);
+      if (originals.length === 0) return;
+
+      const measure = (els) => els.reduce((sum, el, i) => {
+        const rect = el.getBoundingClientRect();
+        return sum + rect.width + (i ? gap : 0);
+      }, 0);
+
+      const imgs = track.querySelectorAll('img');
+      const whenImagesReady = Promise.all(
+        Array.from(imgs).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(res => {
+            img.addEventListener('load', res, { once: true });
+            img.addEventListener('error', res, { once: true });
+          });
+        })
+      );
+
+      whenImagesReady.then(() => {
+        track.innerHTML = '';
+        const frag = document.createDocumentFragment();
+
+        originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+        originals.forEach(el => frag.appendChild(el));
+        originals.forEach(el => frag.appendChild(el.cloneNode(true)));
+        
+        track.appendChild(frag);
+
+        const cycleEls = Array.from(track.children).slice(originals.length, originals.length * 2);
+        let cycleWidth = measure(cycleEls);
+
+        const needWidth = container.getBoundingClientRect().width * 1.2;
+        while (cycleWidth > 0 && cycleWidth < needWidth) {
+          originals.forEach(el => track.appendChild(el.cloneNode(true)));
+          originals.slice().reverse().forEach(el => track.insertBefore(el.cloneNode(true), track.firstChild));
+          
+          let newCycleWidth = measure(cycleEls);
+          if (newCycleWidth > cycleWidth) {
+              cycleWidth = newCycleWidth;
+          } else {
+              break; 
+          }
+        }
+
+        let pos = -cycleWidth;
+        let paused = false;
+        let rafId = null;
+
+        function tick() {
+          if (!paused) {
+            const delta = (speed / 60) * (reverse ? 1 : -1); 
+            pos += delta;
+            if (!reverse && pos <= -2 * cycleWidth) pos += cycleWidth;   
+            if ( reverse && pos >= 0)               pos -= cycleWidth;   
+            track.style.transform = `translateX(${pos}px)`;
+          }
+          rafId = requestAnimationFrame(tick);
+        }
+
+        track.addEventListener('mouseenter', () => paused = true);
+        track.addEventListener('mouseleave', () => paused = false);
+
+        track.style.visibility = 'visible';
+        tick();
+
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                cancelAnimationFrame(rafId);
+                setupSeamlessMarquee(rowId, { reverse, gap, speed }); // RWD 發生時重建
+            }, 250); 
+        }, { passive: true });
+      });
+    }
+    // [修改] 跑馬燈邏輯結束
+
+    // 啟動跑馬燈 (使用修正後的邏輯)
+    setupSeamlessMarquee('row1', {reverse:false, gap:32, speed:55});
+    setupSeamlessMarquee('row2', {reverse:true, gap:32, speed:55});
+
+    // ====== Services：進場交錯動畫（首次進 viewport 執行） ======
+    const serviceCards = document.querySelectorAll('.flow-card');
+    const serviceObserver = new IntersectionObserver((entries,obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const idx = [...serviceCards].indexOf(entry.target);
+          setTimeout(()=> entry.target.classList.add('in'), idx*120);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold: .2});
+    serviceCards.forEach(card=> serviceObserver.observe(card));
+
+    // 初始化快訊
+    loadNews(); // [修改] 移除 DOMContentLoaded，因為已在最外層
+  
+  }); // [修改] 1. DOMContentLoaded 結束
 </script>
 
 </body>
